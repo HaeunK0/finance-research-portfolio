@@ -58,4 +58,4 @@ Notebook 저장 결과: CAGR 17.78%, Sharpe 1.154, MDD -17.06% (거래비용 차
 
 ## Reproducibility
 
-원본 로직을 보존한 검토용 코드와 실행 안내를 별도로 정리한다. ZIP 내 Date/ 폴더와 코드의 Data/ 경로 및 시총 파일명 차이는 실행 전 확인해야 한다.
+[backtest.ipynb](backtest.ipynb)는 원본 계산 로직을 보존하고 설명 셀을 추가한 검토용 Notebook이다. ZIP 내 Date/ 폴더와 코드의 Data/ 경로 및 시총 파일명 차이는 실행 전 확인해야 한다.
