@@ -60,3 +60,7 @@ N=120, R²=0.106. 시장·규모·가치·모멘텀 통제 후 양의 절편이 
 ## Contribution & tools
 
 팀 연구의 피처 설계, Python 구현, 데이터 처리, 백테스트 및 성과·리스크 분석에 참여. pandas, NumPy, Matplotlib, Jupyter 및 AI 보조 코딩 활용. 원천 데이터 및 내부 보고서는 게시하지 않는다.
+
+## Notebook
+
+[backtest.ipynb](backtest.ipynb) — 기존 계산 로직을 유지하고 설명 셀을 추가한 버전. 저장된 실행 출력은 제거했으며 독립 재실행은 수행하지 않았다.
