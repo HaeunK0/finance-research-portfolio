@@ -86,4 +86,4 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 
 ## Reproducibility
 
-대표 Notebook main.ipynb와 그 호출 모듈을 기준으로 정리한다. 추가 실험은 별도 버전이며 원천 금융 데이터는 게시하지 않는다.
+[backtest.ipynb](backtest.ipynb)는 대표 Notebook main.ipynb에 설명 셀을 추가한 버전이다. 호출 보조 모듈은 아직 이 저장소에 게시되지 않았다. 추가 실험은 별도 버전이며 원천 금융 데이터는 게시하지 않는다.
