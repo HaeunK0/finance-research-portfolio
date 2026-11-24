@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | [01. Financial Data Integration](01-earnings-revision/) | EPS 전망·실적, DataGuide, 월말 정렬, 3개월 lag | CAPM / FF3, HAC, p-value |
 | [02. Financial Data Quality](02-shareholder-yield/) | 배당·발행주식수, 금융업 누락 보완, 수정주식수 역산 | NumPy OLS / Newey–West 구현, 민감도 분석 |
-| [03. Alternative Data Integration](03-export-enhanced-pas/) | 가격·산업·수출 데이터 매핑, DataGuide / K-stat, 팀원 DART 크롤링 | 분위 검정, 비교 실험, 요인 회귀 |
+| [03. Alternative Data Integration](03-export-enhanced-pas/) | 가격·산업·수출 데이터 매핑, DataGuide / K-stat, 팀원 DART 공시 수집·산업분류 매핑 시도 | 분위 검정, 비교 실험, 요인 회귀 |
 | [04. Statistical Feature Engineering](04-price-asymmetric-strategy/) | 가격·거래대금, rolling 통계량, 횡단면 순위 | IC / Signal Decay, Carhart 4요인 보고 결과 |
 
 ## Research workflow
@@ -30,8 +30,8 @@ Financial data analytics, statistical modeling, risk management, AI-assisted res
 
 ## Scope & transparency
 
-- 모든 프로젝트는 QUANTIFI 공동 연구이며 단독 성과로 표시하지 않습니다. 3번 프로젝트의 DART 크롤링은 팀원이 담당했습니다. 정확한 DART 수집 항목과 K-stat 자료의 관계는 추가 확인 중입니다.
-- 데이터 시차 및 시점별 유니버스는 편향 완화를 위한 설계이며 완전한 제거를 주장하지 않습니다. 상장폐지 기업의 원천 커버리지와 수익률 반영 여부는 추가 검증 대상입니다.
+- 모든 프로젝트는 QUANTIFI 공동 연구이며 단독 성과로 표시하지 않습니다. 3번 프로젝트에서는 팀원이 GPT를 활용해 DART 사업보고서 수출액 수집과 산업분류 매핑을 시도했습니다. 데이터 적합성 검증 후 해당 구축안을 폐기했으며, 분석용 K-stat 산업 신호와 구분합니다.
+- 데이터 시차 및 시점별 유니버스는 편향 완화를 위한 설계이며 완전한 제거를 주장하지 않습니다. 네 프로젝트 모두 DataGuide에서 상장기업과 상장폐지 기업을 포함해 추출했으며 요인 데이터도 DataGuide를 사용했습니다. 상폐 수익률 반영 여부는 추가 검증 대상입니다.
 - 성과 및 회귀 수치는 저장된 실행 결과와 연구 보고값을 구분해 기재했습니다. 독립 재실행이나 실거래 성과가 아닙니다.
 - 원천 금융 데이터, 내부 보고서 및 손필기는 게시하지 않습니다. 코드는 원본 계산 로직을 보존하고 설명을 추가한 버전으로 정리하며 실행 환경과 데이터 가용성에 따라 재현 여부가 달라질 수 있습니다.
 
