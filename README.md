@@ -2,7 +2,20 @@
 
 **Sogang University · Mathematics | QUANTIFI · 2026 Fall**
 
-수학적 사고와 금융 도메인 지식을 바탕으로 실제 금융 데이터를 처리하고, Python 및 AI 보조 개발 도구를 활용해 가설을 정량화하고 검증한 팀 연구 프로젝트입니다.
+수학적 사고를 바탕으로 추상적인 아이디어를 검증 가능한 가설로 구체화하고, Python과 생성형 AI를 활용하여 데이터 분석, 판단 규칙 설계, 구현 및 성능 검증을 수행했습니다.
+
+본 포트폴리오는 QUANTIFI에서 진행한 네 차례의 팀 연구 프로젝트를 바탕으로 구성하였으며, 투자전략의 성과뿐 아니라 데이터의 특성 파악, 새로운 판단 지표의 설계, 반복적인 검증 및 시행착오를 통한 문제 해결 과정에 중점을 두었습니다.
+
+## Project highlights
+
+| 프로젝트 | 해결하려던 문제와 핵심 역량 |
+| --- | --- |
+| [01. Financial Data Integration](01-earnings-revision/) | 서로 다른 주기·단위의 기업 실적과 전망 데이터를 정렬하고, 정보 이용 시점을 고려해 통합 |
+| [02. Financial Data Quality](02-shareholder-yield/) | 시가총액과 수정주가의 관계에서 수정주식수 대용치를 역산하고 배당 정보와 결합해 새로운 지표 설계 |
+| [03. Alternative Data Integration](03-export-enhanced-pas/) | 수출 데이터를 추가한 전략과 기존 전략을 비교해 데이터의 실질적 유용성을 평가하고 대안 탐색 |
+| [04. Statistical Feature Engineering](04-price-asymmetric-strategy/) | 일별 수정주가에서 네 가지 통계적 특성을 추출하고 결합해 판단 규칙을 설계한 뒤 예측력과 성능 검증 |
+
+처음 읽는 분께는 02, 03, 04번의 Project overview / Problem-solving process를 권장합니다. 각 페이지에 구체적인 데이터 처리, 수식, 검증 결과 및 Notebook을 함께 정리했습니다.
 
 ## Data analytics & research projects
 
@@ -30,7 +43,7 @@ Financial data analytics, statistical modeling, risk management, AI-assisted res
 
 ## Scope & transparency
 
-- 모든 프로젝트는 QUANTIFI 공동 연구이며 단독 성과로 표시하지 않습니다. 3번 프로젝트에서는 팀원이 GPT를 활용해 DART 사업보고서 수출액 수집과 산업분류 매핑을 시도했습니다. 데이터 적합성 검증 후 해당 구축안을 폐기했으며, 분석용 K-stat 산업 신호와 구분합니다.
+- 네 프로젝트는 QUANTIFI 공동 연구입니다. 3번 프로젝트는 팀 차원에서 여러 출처의 수출 데이터 확보 및 가공을 시도했으며, 기업별 데이터 구축안과 최종 실험에 사용한 산업별 신호를 구분합니다.
 - 데이터 시차 및 시점별 유니버스는 편향 완화를 위한 설계이며 완전한 제거를 주장하지 않습니다. 네 프로젝트 모두 DataGuide에서 상장기업과 상장폐지 기업을 포함해 추출했으며 요인 데이터도 DataGuide를 사용했습니다. 상폐 수익률 반영 여부는 추가 검증 대상입니다.
 - 성과 및 회귀 수치는 저장된 실행 결과와 연구 보고값을 구분해 기재했습니다. 독립 재실행이나 실거래 성과가 아닙니다.
 - 원천 금융 데이터, 내부 보고서 및 손필기는 게시하지 않습니다. 각 프로젝트에는 기존 계산 로직을 보존하고 설명을 추가한 backtest.ipynb를 게시했으며 실행 환경과 데이터 가용성에 따라 재현 여부가 달라질 수 있습니다.
