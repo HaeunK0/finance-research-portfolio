@@ -23,7 +23,7 @@
 | --- | --- | --- |
 | [01. Financial Data Integration](01-earnings-revision/) | EPS 전망·실적, DataGuide, 월말 정렬, 3개월 lag | CAPM / FF3, HAC, p-value |
 | [02. Financial Data Quality](02-shareholder-yield/) | 배당·발행주식수, 금융업 누락 보완, 수정주식수 역산 | NumPy OLS / Newey–West 구현, 민감도 분석 |
-| [03. Alternative Data Integration](03-export-enhanced-pas/) | 가격·산업·수출 데이터 매핑, DataGuide / K-stat, 팀원 DART 공시 수집·산업분류 매핑 시도 | 분위 검정, 비교 실험, 요인 회귀 |
+| [03. Alternative Data Integration](03-export-enhanced-pas/) | 가격·산업·수출 데이터 매핑, DataGuide / K-stat, DART 공시 수집·산업분류 매핑 시도 | 분위 검정, 비교 실험, 요인 회귀 |
 | [04. Statistical Feature Engineering](04-price-asymmetric-strategy/) | 가격·거래대금, rolling 통계량, 횡단면 순위 | IC / Signal Decay, Carhart 4요인 보고 결과 |
 
 ## Research workflow
