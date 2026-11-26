@@ -2,11 +2,47 @@
 
 > QUANTIFI · 2026 Fall · Final team research
 
+> **연구 질문:** 하나의 가격 시계열에서 네 가지 통계적 특성을 추출하고 목적에 맞는 판단 규칙으로 결합할 수 있는가?
+
+[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [그림 교체 안내](assets/README.md)
+
+## 연구 질문
+
+1. 동일한 수익률을 기록한 종목의 가격 경로 차이를 어떤 통계량으로 구별할 수 있는가?
+2. 네 통계량을 비교 가능한 순위로 변환하고 롱·숏 규칙에 어떻게 결합할 것인가?
+3. 점수의 예측력과 유지 기간, 거래 가능성을 어떤 실험으로 검증할 것인가?
+
+## 대표 차트
+
+![Final PAS cumulative return and drawdown — 실제 그래프 교체 예정](assets/hero-placeholder.svg)
+
+*실제 연구 그래프가 확보되면 교체할 자리입니다. 현재 그림은 성과 데이터가 아닙니다.*
+
+## English summary
+
+A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Rolling IC, signal decay and execution assumptions are examined. Reported results are distinguished by strategy version.
+
+## 한눈에 보기
+
+| 항목 | 내용 |
+| --- | --- |
+| 신호 | MOM6 · VOL126 · SKEW126 · SHARPE126 |
+| 운용 | 분기 리밸런싱 · 롱110/숏90 · 5일 체결 조건 |
+| 설명서 성과 | CAGR 21.6% · Sharpe 1.14 · MDD -13.6% |
+| 최종 발표 별도 버전 | CAGR 23.55% · Sharpe 1.24 · MDD -13.5% |
+| 한계 | next_date 가격 존재 필터의 미래정보 위험 · 버전 구분 |
+
+성과는 기존 Notebook 저장 결과 또는 팀 보고값이며 독립적으로 재실행하지 않았습니다.
+
 ## Project overview
 
 일별 주가는 시간 순서가 있는 데이터다. 단순히 가격이 얼마나 상승했는지뿐 아니라 상승 과정의 변동성, 수익률 분포의 형태, 위험 대비 수익 특성까지 고려하면 서로 다른 가격 움직임을 구별할 수 있지 않을까? 이 연구에서는 하나의 원천 데이터인 일별 수정주가에서 네 가지 통계적 특성을 추출하고, 이를 결합하여 투자 판단 규칙을 설계했다.
 
 ## Problem-solving process
+
+![동일 수익률과 서로 다른 경로](../assets/price-path-concept.svg)
+
+*개념 설명용 가상 경로이며 실제 시장 데이터가 아니다.*
 
 ### 1. 하나의 시계열에서 네 가지 정보 추출
 
@@ -96,3 +132,23 @@ N=120, R²=0.106. 시장·규모·가치·모멘텀 통제 후 양의 절편이 
 ## Notebook
 
 [backtest.ipynb](backtest.ipynb) — 기존 계산 로직을 유지하고 설명 셀을 추가한 버전. 저장된 실행 출력은 제거했으며 독립 재실행은 수행하지 않았다.
+
+## What we learned | 시행착오와 해석
+
+평가에는 Rolling IC, Signal Decay, 체결기간 비교 및 스코어 분포가 포함된다. 보고서의 Carhart 회귀는 제출 Notebook에서 재현된 결과와 구분한다.
+
+## Repository structure & execution
+
+| 경로 | 역할 |
+| --- | --- |
+| [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
+| [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
+| [assets/](assets/) | 대표 그림 배치 및 교체 안내 |
+
+Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
+
+## Limitations & reproducibility
+
+pick()의 다음 날짜 가격 가용성 확인, forward fill·상폐 처리 및 비중 재정규화 후 체결률은 추가 검증 대상이다. 두 보고 성과 버전을 혼합하지 않는다.
+
+원본 데이터와 내부 발표·보고서는 포함하지 않는다. 보고 성과는 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).

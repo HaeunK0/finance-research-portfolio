@@ -2,6 +2,38 @@
 
 > QUANTIFI · 2026 Fall · Team project
 
+> **연구 질문:** 서로 다른 관측주기와 단위를 가진 기업 실적·전망 데이터를 어떻게 결합해 투자신호를 만들 수 있는가?
+
+[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [그림 교체 안내](assets/README.md)
+
+## 연구 질문
+
+1. 일별 실적 서프라이즈와 월별 EPS 전망 변화율을 어떻게 정렬할 것인가?
+2. 두 신호의 스케일과 정보 이용 시점 차이를 어떻게 처리할 것인가?
+3. 결합 점수에 따른 성과가 시장·규모·가치 요인을 통제한 뒤에도 유의한가?
+
+## 대표 차트
+
+![Cumulative return and drawdown — 실제 그래프 교체 예정](assets/hero-placeholder.svg)
+
+*실제 연구 그래프가 확보되면 교체할 자리입니다. 현재 그림은 성과 데이터가 아닙니다.*
+
+## English summary
+
+A monthly-rebalanced Korean equity long/short strategy combining earnings surprise and FY2 EPS revisions using cross-sectional percentile ranks. The two signals are aligned at month-end and lagged by three months as a conservative timing assumption. Historical results are evaluated with CAPM and Fama–French three-factor regressions using HAC standard errors.
+
+## 한눈에 보기
+
+| 항목 | 내용 |
+| --- | --- |
+| 신호 | EPS Revision + Earnings Surprise (동일 비중 순위 결합) |
+| 운용 | 월별 리밸런싱 · 롱 20 / 숏 20 |
+| 보고 성과 | CAGR 17.78% · Sharpe 1.154 · MDD -17.06% |
+| 통계 검증 | CAPM / FF3 연환산 알파 14.00% / 13.88% |
+| 한계 | 3개월 시차는 보수적 가정, 공시일·상폐 수익률 검증 필요 |
+
+성과는 기존 Notebook 저장 결과 또는 팀 보고값이며 독립적으로 재실행하지 않았습니다.
+
 ## Project overview
 
 기업의 실적이 예상보다 좋았는지, 향후 이익에 대한 전망이 개선되고 있는지를 함께 판단하려면 서로 다른 형식의 데이터를 동일한 기준으로 비교할 수 있어야 한다. 이 연구에서는 두 종류의 정보를 Python으로 통합해 투자 가설을 검증했다.
@@ -72,3 +104,23 @@ Notebook 저장 결과: CAGR 17.78%, Sharpe 1.154, MDD -17.06% (거래비용 차
 ## Reproducibility
 
 [backtest.ipynb](backtest.ipynb)는 원본 계산 로직을 보존하고 설명 셀을 추가한 검토용 Notebook이다. ZIP 내 Date/ 폴더와 코드의 Data/ 경로 및 시총 파일명 차이는 실행 전 확인해야 한다.
+
+## What we learned | 시행착오와 해석
+
+두 신호의 관측주기와 이용 가능 시점을 일치시키는 것이 연구의 핵심이었다. 실제 공시일을 모두 확인한 결과는 아니므로 3개월 lag를 완전한 미래정보 방지로 해석하지 않는다.
+
+## Repository structure & execution
+
+| 경로 | 역할 |
+| --- | --- |
+| [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
+| [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
+| [assets/](assets/) | 대표 그림 배치 및 교체 안내 |
+
+Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
+
+## Limitations & reproducibility
+
+공매도 금지 월 미운용, 원천 가격·상폐 수익률 및 정보 이용 시점 검증 필요. Notebook의 경로·파일명 차이도 확인해야 한다.
+
+원본 데이터와 내부 발표·보고서는 포함하지 않는다. 보고 성과는 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).

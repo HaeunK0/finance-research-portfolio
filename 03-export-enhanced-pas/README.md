@@ -2,6 +2,38 @@
 
 > QUANTIFI · 2026 Fall · Exploratory team project (최종 채택되지 않음)
 
+> **연구 질문:** 새로운 데이터를 추가하면 기존 의사결정 모델의 성능이 실제로 개선되는가?
+
+[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [그림 교체 안내](assets/README.md)
+
+## 연구 질문
+
+1. 기업별 수출액과 산업분류를 일관된 기준으로 연결할 수 있는가?
+2. 기업별 구축안의 적합성이 부족할 때 어떤 대체 데이터가 가능한가?
+3. 산업별 수출 신호의 추가가 가격 신호만 사용한 경우보다 유효한가?
+
+## 대표 차트
+
+![Price-only vs export overlay — cumulative return / drawdown — 실제 그래프 교체 예정](assets/hero-placeholder.svg)
+
+*실제 연구 그래프가 확보되면 교체할 자리입니다. 현재 그림은 성과 데이터가 아닙니다.*
+
+## English summary
+
+An exploratory Korean equity long/short study compares price-asymmetry signals with a combination of price signals and industry export-growth acceleration. The team explored firm-level export collection before adopting industry-level K-stat data. In the main 50:50 experiment, drawdown and Sharpe improved, but CAGR fell slightly and drawdown remained high. The strategy was not adopted as the final approach.
+
+## 한눈에 보기
+
+| 항목 | 내용 |
+| --- | --- |
+| 신호 | 가격 MOM/VOL/SKEW + 산업별 Export Shock |
+| 운용 | 월별 동일가중 · 롱30/숏30 · 수출 1개월 lag |
+| 데이터 적용 | 5개 산업 · 월평균 53.7개 / 302개 (보고 17.5%) |
+| 보고 성과 | CAGR 33.76% · Sharpe 1.35 · MDD -31.60% |
+| 한계 | 최종 미채택 · 추가 정보의 증분 유의성 미검증 |
+
+성과는 기존 Notebook 저장 결과 또는 팀 보고값이며 독립적으로 재실행하지 않았습니다.
+
 ## Project overview
 
 기존 가격 기반 투자전략을 개선하기 위해 산업별 수출 정보를 추가하면 더 유용한 판단 기준을 만들 수 있는지 검토했다. 팀원들과 수출 데이터 확보 및 가공에 많은 시간을 투자했고, 새로운 정보를 결합한 전략과 기존 전략을 비교했다.
@@ -35,7 +67,33 @@ K-stat은 산업·품목별 수출 통계 출처로 발표 초안에 명시된�
 
 ## Exploratory data acquisition & quality validation
 
-팀 차원에서 K-stat, 통계청, DART 등 여러 출처의 수출 데이터를 탐색하고, 기업·산업 데이터와 연결하기 위한 산업분류 정합성 및 데이터 적합성을 검토했다. 기업별 수출액을 구축하려던 접근은 최종 채택하지 않았으며, 최종 비교 실험에 사용한 산업별 K-stat 신호와 구분한다. 현재 Notebook은 분석용 CSV 입력 이후 단계부터 시작하며, 원본 수집 코드는 게시하지 않는다.
+### 데이터 구축에서 전략 재검토까지
+
+| 단계 | 시도 및 판단 |
+| --- | --- |
+| 1. 기업별 데이터 수집 | 팀원들과 DART 사업보고서에서 기업별 수출액 수집을 시도하고, 한국무역협회(K-stat) 통계와 관련 데이터 문의, 통계청 분류 기준, FnGuide 기업별 산업분류를 활용해 연결 방법을 조사 |
+| 2. 산업분류 매핑 | 서로 다른 분류 체계의 데이터를 연결. 당시 팀 내부 설명 기준 매핑 성공률 약 90%, 미매핑 약 10% |
+| 3. 활용 적합성 검토 | 연결 이후 데이터 적합도 약 60%대에 그쳐 최초 기업별 구축안을 폐기 |
+| 4. 대안 구성 | K-stat 품목별 월간 수출을 FnGuide 산업분류에 연결하는 산업별 접근으로 변경 |
+| 5. 비교 실험 | 수출 증가율의 변화(Export Shock)를 1개월 지연해 반영하고 기존 가격 신호와 50:50 결합 |
+| 6. 연구 방향 변경 | 위험 지표는 일부 개선됐으나 최대낙폭은 여전히 높고 연환산 수익률은 소폭 감소. 최종 채택하지 않고 후속 가격 신호 재설계 연구로 전환 |
+
+> 초기 매핑·적합도 수치는 당시 팀 내부 설명에 따른 근사치다. 정확한 분모, 적합성 판정 기준 및 산출 원자료는 현재 확인되지 않았다. 적합도 60%대를 결측률·오류율로 해석하지 않는다.
+
+**최종 분석에 사용한 산업별 매핑** (팀 투자제안서 3·7·30쪽 기준)
+
+| FnGuide 산업 | K-stat 수출 품목 |
+| --- | --- |
+| 반도체 | 반도체 |
+| 자동차 및 부품 | 자동차 |
+| 조선 | 선박 |
+| 화학 | 석유화학 |
+| 디스플레이 | 디스플레이 |
+| 나머지 22개 산업 | 기존 가격 신호 유지 |
+
+월평균 거래 가능 종목 302개 중 53.7개(제안서 보고 기준 17.5%)에 수출 신호를 반영했다. 이는 초기 기업별 매핑 성공률과 다른 지표이며, 나머지 82.5%는 매핑 실패율이 아니라 미적용 비율이다.
+
+현재 Notebook은 분석용 CSV 입력 이후 단계부터 시작하며 원본 수집 코드와 초기 구축안은 게시하지 않는다.
 
 ## Data engineering & bias control
 
@@ -89,3 +147,23 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 ## Reproducibility
 
 [backtest.ipynb](backtest.ipynb)는 대표 Notebook main.ipynb에 설명 셀을 추가한 버전이다. 호출 보조 모듈은 아직 이 저장소에 게시되지 않았다. 추가 실험은 별도 버전이며 원천 금융 데이터는 게시하지 않는다.
+
+## What we learned | 시행착오와 해석
+
+초기 기업별 구축안 폐기와 산업별 대체안의 최종 미채택은 서로 다른 판단이다. 50:50 본 실험과 별도 25% 회귀 실험의 결과는 구분한다.
+
+## Repository structure & execution
+
+| 경로 | 역할 |
+| --- | --- |
+| [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
+| [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
+| [assets/](assets/) | 대표 그림 배치 및 교체 안내 |
+
+Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
+
+## Limitations & reproducibility
+
+매핑·적합도 수치는 근사 내부 설명으로 기준 미확인. 수출 통계 실제 발표일·정정 이력, 매핑 범위, 증분 효과, 보조 모듈 및 원천 수집 코드가 추가 확인 대상이다.
+
+원본 데이터와 내부 발표·보고서는 포함하지 않는다. 보고 성과는 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).
