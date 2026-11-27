@@ -1,10 +1,10 @@
-# 04 | Statistical Feature Engineering — Price Asymmetric Strategy (PAS)
+# 최종 전략 | Price Asymmetric Strategy (PAS)
 
-> QUANTIFI · 2026 Fall · Final team research
+> QUANTIFI · 2026 Fall · 최종 팀 투자제안서 · 2026.10.02
 
 > **연구 질문:** 하나의 가격 시계열에서 네 가지 통계적 특성을 추출하고 목적에 맞는 판단 규칙으로 결합할 수 있는가?
 
-[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [대표 차트](assets/)
+[Python 구현 코드](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [대표 차트](assets/)
 
 ## 연구 질문
 
@@ -12,24 +12,26 @@
 2. 네 통계량을 비교 가능한 순위로 변환하고 롱·숏 규칙에 어떻게 결합할 것인가?
 3. 점수의 예측력과 유지 기간, 거래 가능성을 어떤 실험으로 검증할 것인가?
 
-## 대표 차트
+## 최종 발표 성과
 
-![Original notebook NAV: strategy versus KOSPI](assets/notebook-nav.webp)
+**2016.09.01–2026.08.31 · 120개월 · 분기 리밸런싱 · 거래비용 왕복 50bp**
 
-*원본 `1팀코드제출_0930(2).ipynb` 첫 코드 셀의 저장 그래프를 축소한 이미지. 파란색은 롱숏 전략, 주황색은 KOSPI이다. 원본의 한글 글꼴 깨짐은 유지되며, 실제 가격 데이터를 다시 계산한 그림은 아니다.*
+![최종 투자제안서 누적수익률 그래프](assets/final-nav.webp)
 
-| 2016.09–2026.08 · 120개월 | 5일 체결 가정 | KOSPI |
+*2026.10.02 최종 투자제안서 13쪽의 누적수익률 그래프 원본을 추출하여 웹 표시용으로 축소했다.*
+
+| 성과지표 | PAS Portfolio | KOSPI200 |
 | --- | ---: | ---: |
-| CAGR | 21.58% | 12.86% |
-| Sharpe (Rf 반영) | 1.1370 | 0.5103 |
-| MDD | -13.64% | -34.62% |
-| 연변동성 | 16.71% | 26.28% |
+| CAGR | **23.55%** | 15.36% |
+| Sharpe Ratio | **1.24** | 0.57 |
+| MDD | **-13.5%** | -35.8% |
+| 연변동성 | 16.7% | 28.3% |
 
-성과는 Notebook의 5일 체결 가정 실행 결과(`result_rf.round(4)`)를 기준으로 한다.
+성과와 실증 검증은 2026년 10월 2일 최종 팀 투자제안서 기준이다.
 
 ## English summary
 
-A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Rolling IC, signal decay and execution assumptions are examined. The results and charts are based on the notebook's saved outputs; the benchmark is KOSPI.
+A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Horizon IC, signal persistence, rebalancing frequency, transaction-cost robustness and factor regressions are examined. Final presentation performance is 23.55% CAGR, 1.24 Sharpe and -13.5% maximum drawdown, with KOSPI200 as the reported benchmark.
 
 ## 한눈에 보기
 
@@ -37,11 +39,11 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 | --- | --- |
 | 신호 | MOM6 · VOL126 · SKEW126 · SHARPE126 |
 | 운용 | 분기 리밸런싱 · 롱 후보 50 / 숏 후보 100 · 롱110%/숏90% · 5일 체결 가정 |
-| Notebook 저장 성과 | CAGR 21.58% · Sharpe 1.1370 · MDD -13.64% |
-| 비교 지수 | KOSPI |
+| 최종 발표 성과 | CAGR 23.55% · Sharpe 1.24 · MDD -13.5% |
+| 비교 지수 | KOSPI200 |
 | 한계 | next_date 가격 존재 필터의 미래정보 위험 · 실제 체결 및 공매도 금지 미반영 |
 
-대표 성과는 Notebook에 저장된 백테스트 결과입니다.
+대표 성과 및 검증은 최종 투자제안서의 역사적 백테스트 결과입니다.
 
 ## Project overview
 
@@ -72,10 +74,10 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 
 ### 4. 설계한 규칙의 유효성 검증
 
-- **예측력 분석 (Rolling IC):** 점수와 이후 수익률의 순위 상관관계를 시간에 따라 확인했다.
+- **예측력 분석 (Horizon IC):** 점수와 이후 1~6개월 누적수익률의 순위 상관관계를 검토했다.
 - **예측 기간별 분석 (Signal Decay):** 예측 기간을 바꾸며 점수와 이후 수익률의 관계를 검토했다.
-- **민감도 분석:** 예상 체결기간을 달리한 성과 비교와 스코어 분포 분석을 수행했다.
-- **성과 평가:** 거래비용과 유동성 조건을 고려한 백테스트를 실행하고 KOSPI와 비교했다.
+- **민감도 분석:** 리밸런싱 주기 및 거래비용을 달리한 성과 비교, 팩터 분위별 성과 및 이중정렬 검증을 수행했다.
+- **성과 평가:** 거래비용과 유동성 조건을 고려한 백테스트를 수행하고 KOSPI200과 비교했다.
 
 핵심 투자신호 네 가지는 수정주가에서 도출했지만, 거래 가능성 검토와 성과 측정에는 시가총액, 거래대금, 배당반영 수정주가 및 시장·요인 데이터도 사용했다. 하나의 원천 데이터에서 여러 의미 있는 특성을 도출하고 이를 실제 의사결정에 사용할 규칙으로 구조화한 경험이다.
 
@@ -89,9 +91,11 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 | 배당반영 수정주가 | 시장·총수익 | DataGuide / adj_close_dividend_0906.csv | 월별 총수익률 |
 | 월말 시가총액 | 시장 | DataGuide / mkt_cap_0906.csv | 시점별 상위 30% |
 | 일별 ADV20 | 시장·유동성 | DataGuide / 20일평균거래대금.csv | 예상 체결 가능성 |
-| KOSPI, Rf | 시장·요인 | Factor_0917.csv | KOSPI 벤치마크 및 무위험수익률 환산 |
+| KOSPI200 | 비교 지수 | DataGuide | 벤치마크 성과 |
+| KOSPI, Rf, SMB, HML, MOM | 시장·요인 | DataGuide | 무위험수익률 환산 및 요인 회귀 |
+| FnGuide 27개 산업분류 | 산업 | DataGuide | 산업별 특성 분석 |
 
-주요 데이터는 팀 DataGuide 추출 자료. 원본 Notebook은 요인 파일 중 KOSPI와 Rf를 실제로 사용한다. 지수 산출 정의는 별도 확인 대상이다.
+주요 데이터는 팀의 DataGuide 추출 자료다.
 
 ## Data engineering & bias control
 
@@ -114,63 +118,76 @@ $$S=R(MOM6)(1-R(VOL126))(1-R(SKEW126))$$
 - 숏 점수 하위 100개를 우선 선정하고, 이를 제외한 롱 적격 종목(Sharpe 대용치 유효, 최근 126거래일 중 하락 수익률 관측 60일 이상)에서 롱 점수 상위 50개를 선정한다.
 - 레그별 가정 운용금액 1,000억원을 목표 종목 수로 나눈 주문금액은 롱 20억원, 숏 10억원이다. 하루 ADV20의 10%까지 체결 가능하다고 가정하고, 5일 기준 예상 체결률 80% 이상인 후보만 편입한다(ADV20 하한 롱 32억원, 숏 16억원). 탈락한 자리는 보충하지 않는다.
 - 편입 후 레그별 동일가중, 명목 롱 110%·숏 90%(Gross 200%, Net +20%). 110과 90은 종목 수가 아니라 노출 비중이다. 2016년 8월 말부터 3개월마다 종목을 재선정하며, 분기 내에는 편입 종목의 월별 단순평균 수익률을 사용한다.
-- 매매비용은 편도 25bp × 노출 가중 회전율(왕복 50bp 상당), 대차비용은 숏 노출 90%에 연 3%를 월할해 차감한다(월 0.225%).
+- 매매비용은 왕복 50bp, 대차비용은 연 3%를 적용한다. 롱·숏 노출 및 유동성 조건을 고려하며 공매도 금지기간을 백테스트 기간에 포함한다. 최종 발표 기준 평균 편입 종목은 롱 35.1개, 숏 82.1개이다.
 
-### 1. 체결 기간 민감도
+### 1. 분기 리밸런싱의 근거
 
-![Execution horizon robustness](assets/execution-robustness.svg)
+![Horizon IC — 최종 발표자료의 1~6개월 예측력](assets/horizon-ic.svg)
 
-| 지표 | 3일 | 5일 (기준) | 10일 | KOSPI |
+*최종 투자제안서 11쪽의 원본 차트 곡선과 표시값을 기반으로 벡터화한 그림. Short는 공매도 방향의 수익률을 기준으로 한 IC이고 Combined는 두 신호를 표준화하여 결합한 진단용 점수다.*
+
+| 지표 | 월간 1M | 분기 3M | 반기 6M |
+| --- | ---: | ---: | ---: |
+| CAGR | 17.72% | **23.55%** | 18.32% |
+| Sharpe | 1.006 | **1.236** | 1.032 |
+| MDD | -20.60% | **-13.54%** | -14.11% |
+| 연 거래량 / 자본 | 25.11배 | 11.60배 | 6.70배 |
+| 연 거래비용 | 6.28% | 2.90% | 1.67% |
+
+동일한 신호·종목 선정·유동성 조건에서 리밸런싱 주기를 비교했다. 분기는 월간보다 거래비용을 줄이면서 세 주기 중 높은 비용 차감 성과를 보였다. 특정 주기가 모든 시장에서 최적이라는 의미는 아니다.
+
+### 2. 신호 지속성
+
+![Signal persistence — 최종 발표자료의 월별 단독수익률 IC](assets/signal-persistence.svg)
+
+*최종 투자제안서 12쪽의 차트 곡선을 기반으로 벡터화한 그림. 각 월의 단독 수익률에 대한 IC로 누적 Horizon IC와 구별한다.*
+
+Short 신호의 IC는 약 0.093에서 약 0.072로 하락한 뒤 완만하게 유지됐다. 3개월 후 신호 갱신에 따른 추가 순수익은 롱숏 전체 -0.16%p(95% 구간 -2.36~+2.04%p), 숏 +1.24%p(-0.05~+2.52%p)로 보고됐다. 갱신 효과의 통계적 우월성을 단정할 수 없다는 점도 함께 고려했다.
+
+### 3. 거래비용 민감도
+
+| 왕복 거래비용 | CAGR | Sharpe | 연변동성 | MDD |
 | --- | ---: | ---: | ---: | ---: |
-| CAGR | 24.13% | 21.58% | 20.72% | 12.86% |
-| 연변동성 | 18.39% | 16.71% | 15.93% | 26.28% |
-| Sharpe (Rf 반영) | 1.1643 | 1.1370 | 1.1402 | 0.5103 |
-| MDD | -20.46% | -13.64% | -14.12% | -34.62% |
+| 40bp | 24.25% | 1.27 | 16.77% | -13.5% |
+| 50bp (기준) | 23.55% | 1.24 | 16.75% | -13.5% |
+| 60bp | 22.85% | 1.20 | 16.74% | -13.5% |
 
-3일 가정은 수익률이 높지만 최대낙폭도 크고, 5일 가정은 세 전략 중 최대낙폭이 가장 작다. 위 결과는 체결기간 가정에 대한 민감도이지 실제 체결 기록이 아니다. Rf는 연율(%)을 252거래일 기준 일수익률로 환산하고 월별 복리 누적한다. Sharpe 분자는 월 초과수익률 평균, 분모는 전략 월수익률의 표준편차이다.
+거래비용 가정을 높여도 표본 내에서 양의 성장률과 Sharpe 1 이상의 성과를 보고했다. 출처: 최종 투자제안서 14쪽.
 
-### 2. Horizon IC / Signal Decay
+### 4. 팩터 검증 및 요인 회귀
 
-![Mean forward IC from submitted notebook](assets/horizon-ic.svg)
+- 롱 팩터의 5분위 검증에서 높은 점수 그룹의 성과가 높았으며, 시총·팩터 이중정렬로 규모 효과와 신호를 함께 검토했다.
+- 숏 적합도 및 시총 분위 조합별 성과도 검토했다. 출처: 최종 투자제안서 15~16쪽.
 
-| 예측 기간 (누적수익률) | Long IC | Short IC | Long 양수 비율 | Short 양수 비율 | 관측 월 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| 1개월 | 0.0080 | 0.0945 | 55.00% | 76.67% | 120 |
-| 2개월 | 0.0149 | 0.1226 | 57.98% | 81.51% | 119 |
-| 3개월 | 0.0189 | 0.1334 | 62.71% | 84.75% | 118 |
+| Carhart 4-factor · 왕복 50bp 롱숏 | 계수 | t-stat | p-value |
+| --- | ---: | ---: | ---: |
+| Alpha (월) | **0.0141** | **3.51** | **0.004** |
+| MKT | 0.0204 | 0.28 | 0.782 |
+| SMB | -0.2176 | -1.40 | 0.163 |
+| HML | 0.1396 | 0.94 | 0.349 |
+| MOM | 0.0896 | 0.78 | 0.435 |
 
-각 월 형성 시점의 원점수와 이후 1~3개월 **누적** 수익률의 횡단면 Spearman 상관계수를 계산한다. IC용 get_scores()는 미래 가격 존재 여부, 유동성 필터, 상·하위 후보 선정을 사용하지 않는다. 롱 IC에는 하락일 조건을 적용한다. 숏 점수는 낮은 종목을 공매도하므로 **원점수와 기초자산 수익률의 양의 상관**이 전략 방향과 일치한다. 원본에는 12개월 Rolling IC(최소 6개월) 그래프와 3M/1M IC 비율도 저장되어 있다(롱 235.38%, 숏 141.17%). 롱의 절대 IC는 작으며 작은 분모에 따른 비율 확대 및 누적수익률 구간 중첩을 고려해야 한다. 별도의 유의성 검정이나 최적 리밸런싱 주기의 입증은 아니다.
-
-### 3. 점수 분포 및 선정 단계 점검
-
-마지막 리밸런싱 형성일 2026.05.29의 원본 저장 출력:
-
-| 구분 | 유효 점수 수 | 점수 후보 | 유동성 통과 후 편입 | 점수 중앙값 |
-| --- | ---: | ---: | ---: | ---: |
-| Long | 960 | 50 | 47 | 0.0826 |
-| Short | 964 | 100 | 88 | 0.0699 |
-
-점수의 원값·백분위 순위 및 필터 전후 후보를 시각화하는 셀이 포함되어 있다. 이는 마지막 형성일 사례이며 전체 기간 평균 체결률이 아니다.
+최종 투자제안서 18쪽에 보고된 결과. 시장·규모·가치·모멘텀 요인을 통제한 뒤 양의 월 알파를 보고했으며, 미래 성과나 인과적 효과를 보장하지 않는다.
 
 ## Contribution & tools
 
-팀 연구의 피처 설계, Python 구현, 데이터 처리, 백테스트 및 성과·리스크 분석에 참여. pandas, NumPy, Matplotlib, Jupyter 및 AI 보조 코딩 활용. 원천 데이터 및 내부 보고서는 게시하지 않는다.
+팀 연구의 피처 설계, Python 구현, 데이터 처리, 백테스트 및 성과·리스크 분석에 참여. pandas, NumPy, Matplotlib, Jupyter 및 AI 보조 코딩 활용. 원천 금융 데이터는 게시하지 않는다.
 
 ## Notebook
 
-[backtest.ipynb](backtest.ipynb) — 전략 구현 및 검증 코드. 원천 데이터 노출 방지를 위해 실행 출력은 제거했으며, 주요 결과는 README에 제공한다.
+[backtest.ipynb](backtest.ipynb) — 전략 구현 참고 코드. 원천 데이터 노출 방지를 위해 실행 출력은 제거했으며, 최종 발표 성과 및 주요 검증 결과는 README에 제공한다.
 
 ## What we learned | 시행착오와 해석
 
-평가에는 Rolling IC, Signal Decay, 3·5·10일 체결기간 비교 및 스코어 분포가 포함된다. 수익률만 비교하지 않고 낙폭·예측력·유동성 제약도 함께 점검했다.
+평가에는 Horizon IC, Signal Decay, 리밸런싱 주기와 거래비용 민감도, 팩터 분위별 검증 및 요인 회귀가 포함된다. 수익률만 비교하지 않고 낙폭·예측력·유동성 제약도 함께 점검했다.
 
 ## Repository structure & execution
 
 | 경로 | 역할 |
 | --- | --- |
 | [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
-| [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
-| [assets/](assets/) | 원본 저장 NAV 그래프, IC 및 체결기간 비교 차트 |
+| [backtest.ipynb](backtest.ipynb) | 전략 구현 참고 Notebook |
+| [assets/](assets/) | 최종 투자제안서 기반 누적수익률 및 IC 차트 |
 
 Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
 
@@ -178,4 +195,4 @@ Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 �
 
 pick()의 다음 날짜 가격 가용성 확인은 미래정보 위험이 있다. forward fill·상폐 처리 및 필터 통과 후 비중 재정규화로 주문금액이 커지는 문제도 추가 검증 대상이다. 코드는 공매도 금지기간을 별도로 제외하지 않고, 실제 매매 체결을 시뮬레이션하는 대신 유동성 통과 조건으로 사용한다. 전체 실행에는 원천 금융 데이터가 필요하다.
 
-원본 데이터와 내부 발표·보고서는 포함하지 않는다. 보고 성과는 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).
+원천 금융 데이터는 포함하지 않는다. 보고 성과는 최종 투자제안서에 제시한 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).

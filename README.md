@@ -4,6 +4,8 @@
 
 수학적 사고를 바탕으로 추상적인 아이디어를 검증 가능한 가설로 구체화하고, Python과 생성형 AI를 활용해 데이터 분석, 판단 규칙 설계, 구현 및 성능 검증을 수행했습니다. 본 포트폴리오는 QUANTIFI에서 진행한 네 차례의 팀 연구를 바탕으로, 투자 성과뿐 아니라 데이터에서 의미를 발견하고 실험을 통해 해결책을 발전시킨 과정에 중점을 두었습니다.
 
+**[최종 전략 — Price Asymmetric Strategy (PAS)](00-final-strategy-PAS/)** · 2026.10.02 최종 발표 · CAGR 23.55% · Sharpe 1.24 · MDD -13.5%
+
 ## Selected Problem-Solving Experiences | 주요 문제 해결 경험
 
 ### 01. 데이터 간 관계를 활용한 새로운 정보 추출
@@ -34,7 +36,7 @@ $$NSI_{i,t}=\ln\left(\frac{N_{i,t-1}}{N_{i,t-13}}\right),\qquad SY_{i,t}=DY_{i,t
 ---
 
 ### 02. 하나의 시계열 데이터에서 네 가지 통계적 특성 추출
-**Statistical Feature Engineering · Decision Rule Design | [Project 04 — PAS](04-price-asymmetric-strategy/)**
+**Statistical Feature Engineering · Decision Rule Design | [최종 전략 — PAS](00-final-strategy-PAS/)**
 
 **문제 상황.** 동일한 기간에 같은 10%의 수익률을 기록한 두 종목이라도, 꾸준히 상승한 종목과 급등락을 반복한 종목의 특성은 다릅니다. 단순 수익률만으로는 가격 변화 과정의 차이를 설명하기 어렵다고 보았습니다.
 
@@ -53,17 +55,17 @@ $$NSI_{i,t}=\ln\left(\frac{N_{i,t-1}}{N_{i,t-13}}\right),\qquad SY_{i,t}=DY_{i,t
 
 각 통계량을 종목 간 상대 순위로 변환해 단위와 범위의 차이를 줄였습니다. 매수와 공매도의 판단 목적에 맞춰 서로 다른 점수식을 설계하고 Python으로 구현했습니다.
 
-**검증 및 결과.** Rolling IC, Signal Decay, 백테스트 및 체결 조건별 비교를 수행했습니다.
+**검증 및 결과.** Horizon IC, Signal Decay, 리밸런싱 주기 및 거래비용 비교, 백테스트를 통해 검증했습니다.
 
-| 5일 체결 가정 (원본 Notebook 저장 결과) | 전략 | KOSPI |
+| 최종 발표 성과 (2026.10.02) | 전략 | KOSPI200 |
 | --- | ---: | ---: |
-| CAGR | 21.58% | 12.86% |
-| Sharpe (Rf 반영) | 1.1370 | 0.5103 |
-| MDD | -13.64% | -34.62% |
+| CAGR | **23.55%** | 15.36% |
+| Sharpe | **1.24** | 0.57 |
+| MDD | **-13.5%** | -35.8% |
 
-**배운 점.** 데이터의 양뿐 아니라 어떤 관점에서 해석하고 판단 규칙으로 구조화하는지가 중요하다는 점을 경험했습니다. 네 핵심 피처는 수정주가에서 추출했으며, 체결 검토·성과 측정에는 시총·거래대금 등 추가 데이터도 사용했습니다. 위 성과는 Notebook의 저장된 백테스트 결과입니다.
+**배운 점.** 데이터의 양뿐 아니라 어떤 관점에서 해석하고 판단 규칙으로 구조화하는지가 중요하다는 점을 경험했습니다. 네 핵심 피처는 수정주가에서 추출했으며, 체결 검토·성과 측정에는 시총·거래대금 등 추가 데이터도 사용했습니다. 위 성과는 2026년 10월 2일 최종 투자제안서의 백테스트 결과입니다.
 
-[상세 연구 및 판단 규칙](04-price-asymmetric-strategy/) · [Python Notebook](04-price-asymmetric-strategy/backtest.ipynb)
+[상세 연구 및 판단 규칙](00-final-strategy-PAS/) · [Python Notebook](00-final-strategy-PAS/backtest.ipynb)
 
 ---
 
@@ -106,7 +108,7 @@ $$NSI_{i,t}=\ln\left(\frac{N_{i,t-1}}{N_{i,t-13}}\right),\qquad SY_{i,t}=DY_{i,t
 | Sharpe | 1.31 | 1.35 |
 | MDD | -43.63% | -31.60% |
 
-**배운 점.** 데이터를 연결하는 데 성공하는 것과 분석에 적합한 데이터를 확보하는 것은 다르며, 새로운 데이터가 언제나 더 나은 결과를 보장하지도 않습니다. 기존에 투입한 시간과 노력에 얽매이지 않고 실증 결과를 근거로 판단 기준을 재설계하는 방향을 택했습니다. 후속 Project 04는 전략 조건이 다른 연구로, 성과를 단순 전후 비교하지 않습니다.
+**배운 점.** 데이터를 연결하는 데 성공하는 것과 분석에 적합한 데이터를 확보하는 것은 다르며, 새로운 데이터가 언제나 더 나은 결과를 보장하지도 않습니다. 기존에 투입한 시간과 노력에 얽매이지 않고 실증 결과를 근거로 판단 기준을 재설계하는 방향을 택했습니다. 후속 최종 전략은 전략 조건이 다른 연구로, 성과를 단순 전후 비교하지 않습니다.
 
 [데이터 처리 및 상세 비교 실험](03-export-enhanced-pas/) · [Python Notebook](03-export-enhanced-pas/backtest.ipynb)
 
@@ -116,10 +118,10 @@ $$NSI_{i,t}=\ln\left(\frac{N_{i,t-1}}{N_{i,t-13}}\right),\qquad SY_{i,t}=DY_{i,t
 
 | Project | 연구 질문 | 핵심 역량 |
 | --- | --- | --- |
+| [**최종 전략 — Price Asymmetric Strategy**](00-final-strategy-PAS/) | 하나의 시계열에서 서로 다른 특성을 도출해 판단 규칙으로 발전시킬 수 있는가? | 통계적 피처 엔지니어링, 검증 |
 | [01. Earnings Surprise & EPS Revision](01-earnings-revision/) | 서로 다른 관측주기·단위의 실적 및 전망 정보를 어떻게 결합할 수 있는가? | 데이터 정렬·통합, 시점 관리 |
 | [02. Shareholder Yield](02-shareholder-yield/) | 기존 변수의 관계에서 필요한 정보를 역산해 새로운 지표를 설계할 수 있는가? | 데이터 해석, 피처 설계 |
 | [03. PAS + Export Shock](03-export-enhanced-pas/) | 새로운 데이터의 추가가 기존 전략을 실제로 개선하는가? | 데이터 매핑, 품질 검토, 비교 실험 |
-| [04. Price Asymmetric Strategy](04-price-asymmetric-strategy/) | 하나의 시계열에서 서로 다른 특성을 도출해 판단 규칙으로 발전시킬 수 있는가? | 통계적 피처 엔지니어링, 검증 |
 
 ## Core Competencies & Research Workflow
 
@@ -142,11 +144,11 @@ Financial data analytics, statistical modeling, risk management, AI-assisted res
 ```text
 finance-research-portfolio/
 ├── README.md
-├── assets/                         # 개념 설명용 시각 자료
+├── 00-final-strategy-PAS/          # 최종 전략 · 통계 피처와 판단 규칙
 ├── 01-earnings-revision/           # 데이터 통합
 ├── 02-shareholder-yield/           # 정보 역산 및 지표 설계
 ├── 03-export-enhanced-pas/         # 대체 데이터 비교 실험
-└── 04-price-asymmetric-strategy/   # 통계 피처와 판단 규칙
+└── assets/                         # 개념 설명용 시각 자료
 ```
 
 각 프로젝트에는 연구 설명, Python Notebook 및 백테스트 결과를 시각화한 차트가 포함되어 있습니다.
@@ -157,4 +159,4 @@ finance-research-portfolio/
 - DataGuide에서 상장기업과 상장폐지 기업을 포함해 추출했으며 요인 데이터도 DataGuide를 사용했습니다. 상폐 수익률 처리까지 완전히 검증한 것은 아닙니다.
 - 데이터 이용 가능 시점을 고려해 연구별로 시차를 적용했습니다(01: 두 신호 3개월, 02: DPS 15개월, 03: 수출 1개월, 04: 과거 가격 관측값). 실제 공시·발표 시점과 완전히 일치하는지 추가 검증이 필요합니다.
 - 원천 금융 데이터는 데이터 제공업체의 이용 조건을 고려해 공개하지 않습니다. 전체 백테스트 재현에는 별도의 원천 데이터가 필요합니다.
-- 성과와 그래프는 각 프로젝트의 Notebook 실행 결과(02번은 핵심 분석 재실행)를 기준으로 제시합니다. 역사적 백테스트 성과이며 실거래 결과가 아닙니다.
+- 1~3주차의 성과와 그래프는 각 프로젝트의 Notebook 실행 결과(02번은 핵심 분석 재실행), 최종 전략은 2026.10.02 최종 투자제안서 기준으로 제시합니다. 역사적 백테스트 성과이며 실거래 결과가 아닙니다.
