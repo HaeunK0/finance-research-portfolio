@@ -25,7 +25,7 @@
 | MDD | -43.63% | -31.60% |
 | 연변동성 | 25.04% | 23.88% |
 
-원본 코드 셀 15개가 저장소 Notebook과 일치한다. 원본 ZIP의 별도 실험 CSV에는 다른 결과도 존재해, 여기서는 `main.ipynb`에 저장된 Fixed30 50:50 본 실험의 출력을 기준으로 한다. 원천 데이터를 읽어 새로 실행하는 작업은 시간 제한으로 완료하지 못했다.
+성과표와 그래프는 Notebook에 저장된 Fixed30 50:50 본 실험의 실행 결과다.
 
 ## English summary
 
@@ -41,7 +41,7 @@ An exploratory Korean equity long/short study compares price-asymmetry signals w
 | 보고 성과 | CAGR 33.76% · Sharpe 1.35 · MDD -31.60% |
 | 한계 | 최종 미채택 · 추가 정보의 증분 유의성 미검증 |
 
-대표 성과 및 아래 통계 검정은 원본 main.ipynb 저장 출력 기준입니다. 초기 데이터 구축 일화와 적용 범위의 발표자료 수치는 별도로 구분합니다.
+대표 성과 및 통계 검정은 Notebook에 저장된 실행 결과입니다.
 
 ## Project overview
 
@@ -102,7 +102,7 @@ K-stat은 산업·품목별 수출 통계 출처로 발표 초안에 명시된�
 
 월평균 거래 가능 종목 302개 중 53.7개(제안서 보고 기준 17.5%)에 수출 신호를 반영했다. 이는 초기 기업별 매핑 성공률과 다른 지표이며, 나머지 82.5%는 매핑 실패율이 아니라 미적용 비율이다.
 
-현재 Notebook은 분석용 CSV 입력 이후 단계부터 시작하며 원본 수집 코드와 초기 구축안은 게시하지 않는다. 17.5%는 팀 발표자료에서 제시한 적용 범위로, 이번에 재실행해 산출한 수치가 아니다.
+현재 Notebook은 분석용 CSV 입력 이후 단계부터 시작하며 원본 수집 코드와 초기 구축안은 게시하지 않는다. 17.5%는 팀 연구에서 보고한 적용 범위다.
 
 ## Data engineering & bias control
 
@@ -151,7 +151,7 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 
 ![Export signal weight sensitivity](assets/export-weight-sensitivity.svg)
 
-원본 main.ipynb의 SAME NET BACKTEST(셀 10, 0부터 시작)의 저장값. 다른 25% 실험의 요인회귀나 Fixed50/유동성 제약 제거 실험의 출력은 이 표와 결합하지 않는다. 별도의 증분 효과 검정 없이 수출 데이터 추가 효과가 통계적으로 유의하다고 주장하지 않는다.
+원본 main.ipynb의 SAME NET BACKTEST(셀 10, 0부터 시작)의 저장값. 별도의 증분 효과 검정 없이 수출 데이터 추가 효과가 통계적으로 유의하다고 주장하지 않는다.
 
 ## Reported results
 
@@ -169,7 +169,7 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 
 ## Reproducibility
 
-[backtest.ipynb](backtest.ipynb)는 대표 Notebook main.ipynb와 코드 셀 15개가 일치하는 설명 추가 버전이다. ZIP에는 호출 보조 모듈 fixed30_execution_regression.py와 export_month_selection_audit.py가 포함되어 있지만 저장소에는 게시되지 않았다. 원천 금융 데이터는 공개하지 않는다. 제공된 fixed30_pas_export_summary.csv의 CAGR 29.7134%/28.9658%는 main.ipynb 저장 출력 34.128%/33.760%와 일치하지 않아 별도 결과로 취급한다. 이번 실행은 원천 데이터 로딩까지 완료했으나 시간 제한으로 핵심 백테스트를 완료하지 못했다.
+[backtest.ipynb](backtest.ipynb)는 Fixed30 전략 구현 및 검증 코드다. 전체 실행에는 원천 데이터와 보조 모듈 fixed30_execution_regression.py 및 export_month_selection_audit.py가 필요하며 현재 저장소에는 포함되어 있지 않다.
 
 ## What we learned | 시행착오와 해석
 

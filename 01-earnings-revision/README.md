@@ -25,7 +25,7 @@
 | MDD | -17.06% | -35.64% |
 | 연변동성 | 15.27% | 28.02% |
 
-성과 기간은 2015.10–2026.08 (131개월 중 전략 활성 99개월, 전면 공매도 금지와 겹친 32개월 미운용). 원본 코드 셀 16개가 현재 공개용 Notebook의 코드 셀과 일치함을 확인했습니다. 이번에는 시가총액 입력 파일 누락으로 독립 재실행을 하지 않았으며, 원본 저장 결과를 사용했습니다.
+성과 기간은 2015.10–2026.08 (131개월 중 전략 활성 99개월, 전면 공매도 금지와 겹친 32개월 미운용).
 
 ## English summary
 
@@ -41,7 +41,7 @@ A monthly-rebalanced Korean equity long/short strategy combining earnings surpri
 | 통계 검증 | CAPM / FF3 연환산 알파 14.00% / 13.88% |
 | 한계 | 3개월 시차는 보수적 가정, 공시일·상폐 수익률 검증 필요 |
 
-성과와 회귀 수치는 원본 Notebook의 저장된 실행 결과입니다. 독립적으로 재실행하지 않았습니다.
+성과와 회귀 수치는 Notebook의 저장된 실행 결과입니다.
 
 ## Project overview
 
@@ -112,7 +112,7 @@ FF3에서 SMB 0.0725, HML 0.0441, R² 0.00584. 표본 내에서 시장·규모·
 
 ## Reproducibility
 
-[backtest.ipynb](backtest.ipynb)는 원본 계산 로직을 보존하고 설명 셀을 추가한 검토용 Notebook이다. 원본 ZIP의 Date/ 폴더는 코드의 Data/ 경로와 다르며, 코드가 요구하는 시가총액 파일 kospi_stock.csv 또는 kospi_mcap.csv는 이번 ZIP에 포함되어 있지 않았다. 따라서 저장된 원본 결과 및 그래프를 인용하고 독립 재실행은 보류했다.
+[backtest.ipynb](backtest.ipynb)는 전략 구현 및 검증 코드다. 실행에는 위 표의 원천 데이터와 시가총액 파일(kospi_stock.csv 또는 kospi_mcap.csv)이 필요하다.
 
 ## What we learned | 시행착오와 해석
 

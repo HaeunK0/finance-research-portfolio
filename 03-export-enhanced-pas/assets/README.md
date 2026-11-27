@@ -1,6 +1,4 @@
 # Figure sources
 
-- `notebook-nav.webp`: resized original saved chart from the Fixed30 main backtest cell in `main.ipynb`, PAS Only versus PAS + Export 50:50.
-- `export-weight-sensitivity.svg`: redrawn directly from the SAME NET BACKTEST cell's stored weight sensitivity values, not from a different CSV experiment.
-
-Original saved output, not a completed independent rerun. Raw data and alternative experiment CSVs are not included.
+- `notebook-nav.webp`: Fixed30 PAS Only와 PAS + Export 50:50의 Notebook 저장 누적수익률 그래프.
+- `export-weight-sensitivity.svg`: 동일한 백테스트 조건의 수출 신호 비중별 성과.

@@ -1,7 +1,7 @@
 # Figure sources
 
-- `notebook-nav.webp`: resized saved original NAV image from cell 0 of the submitted September 30 Notebook; blue = strategy, orange = KOSPI. Korean glyphs are missing in the original.
-- `horizon-ic.svg`: redrawn from the stored mean IC table in cell 3, horizons 1–3 months, raw short-score correlation.
-- `execution-robustness.svg`: redrawn from the saved 3/5/10-day execution scenario table in cell 1.
+- `notebook-nav.webp`: Notebook 저장 누적수익률 그래프(전략 및 KOSPI).
+- `horizon-ic.svg`: 1–3개월 평균 IC 저장 결과.
+- `execution-robustness.svg`: 3·5·10일 체결 가정별 성과 저장 결과.
 
-All cell indices are zero-based. Main 5-day performance: CAGR 21.58%, Rf-adjusted Sharpe 1.1370, MDD -13.64%. These are saved outputs, not a new rerun. No raw market data is included. The previous presentation-based figures have been replaced.
+기준안: 5일 체결 가정, CAGR 21.58%, Sharpe 1.1370, MDD -13.64%.

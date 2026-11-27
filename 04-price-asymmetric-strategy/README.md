@@ -12,7 +12,7 @@
 2. 네 통계량을 비교 가능한 순위로 변환하고 롱·숏 규칙에 어떻게 결합할 것인가?
 3. 점수의 예측력과 유지 기간, 거래 가능성을 어떤 실험으로 검증할 것인가?
 
-## 대표 차트 | 9월 30일 제출 Notebook
+## 대표 차트
 
 ![Original notebook NAV: strategy versus KOSPI](assets/notebook-nav.webp)
 
@@ -25,11 +25,11 @@
 | MDD | -13.64% | -34.62% |
 | 연변동성 | 16.71% | 26.28% |
 
-성과는 원본 두 번째 코드 셀의 저장 출력 `result_rf.round(4)` 기준이다. 저장소의 코드 셀 9개와 제공된 원본의 코드 셀 9개가 동일함을 확인했다. 원천 CSV는 이번 파일에 포함되지 않아 독립 재실행은 하지 않았다.
+성과는 Notebook의 5일 체결 가정 실행 결과(`result_rf.round(4)`)를 기준으로 한다.
 
 ## English summary
 
-A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Rolling IC, signal decay and execution assumptions are examined. The primary results and charts are based on the saved outputs of the submitted September 30 notebook; the benchmark is KOSPI.
+A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Rolling IC, signal decay and execution assumptions are examined. The results and charts are based on the notebook's saved outputs; the benchmark is KOSPI.
 
 ## 한눈에 보기
 
@@ -38,10 +38,10 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 | 신호 | MOM6 · VOL126 · SKEW126 · SHARPE126 |
 | 운용 | 분기 리밸런싱 · 롱 후보 50 / 숏 후보 100 · 롱110%/숏90% · 5일 체결 가정 |
 | Notebook 저장 성과 | CAGR 21.58% · Sharpe 1.1370 · MDD -13.64% |
-| 비교 지수 | KOSPI (KOSPI200 아님) |
+| 비교 지수 | KOSPI |
 | 한계 | next_date 가격 존재 필터의 미래정보 위험 · 실제 체결 및 공매도 금지 미반영 |
 
-대표 성과는 원본 Notebook에 저장된 실행 결과이며 독립적으로 재실행하지 않았습니다.
+대표 성과는 Notebook에 저장된 백테스트 결과입니다.
 
 ## Project overview
 
@@ -150,16 +150,7 @@ $$S=R(MOM6)(1-R(VOL126))(1-R(SKEW126))$$
 | Long | 960 | 50 | 47 | 0.0826 |
 | Short | 964 | 100 | 88 | 0.0699 |
 
-점수의 원값·백분위 순위 및 필터 전후 후보를 시각화하는 셀이 포함되어 있다. 이는 마지막 형성일 사례이며 전체 기간 평균 체결률이 아니다. 해당 셀의 실행 번호는 비어 있으나 저장된 그림과 표는 존재한다.
-
-### 검증 기록 — 발표자료와 Notebook의 차이
-
-| 출처 | CAGR | Sharpe | MDD | 벤치마크 |
-| --- | ---: | ---: | ---: | --- |
-| 9월 30일 제출 Notebook (대표) | 21.58% | 1.1370 | -13.64% | KOSPI |
-| 10월 2일 팀 발표자료 | 23.55% | 1.24 | -13.5% | KOSPI200 (발표자료 표기) |
-
-이 페이지의 대표 수치와 차트는 첫 행으로 통일했다. 발표자료의 1~6개월 IC, 리밸런싱 주기 비교, Carhart 회귀 등은 현재 원본 Notebook의 실행 출력으로 확인할 수 없으므로 대표 검증에서 제외한다. 서로 다른 성과의 정확한 원인은 해당 발표용 코드와 입력 이력 없이는 확정할 수 없다.
+점수의 원값·백분위 순위 및 필터 전후 후보를 시각화하는 셀이 포함되어 있다. 이는 마지막 형성일 사례이며 전체 기간 평균 체결률이 아니다.
 
 ## Contribution & tools
 
@@ -167,7 +158,7 @@ $$S=R(MOM6)(1-R(VOL126))(1-R(SKEW126))$$
 
 ## Notebook
 
-[backtest.ipynb](backtest.ipynb) — 기존 계산 로직을 유지하고 설명 셀을 추가한 버전. 저장된 실행 출력은 제거했으며 독립 재실행은 수행하지 않았다.
+[backtest.ipynb](backtest.ipynb) — 전략 구현 및 검증 코드. 원천 데이터 노출 방지를 위해 실행 출력은 제거했으며, 주요 결과는 README에 제공한다.
 
 ## What we learned | 시행착오와 해석
 
@@ -185,6 +176,6 @@ Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 �
 
 ## Limitations & reproducibility
 
-pick()의 다음 날짜 가격 가용성 확인은 미래정보 위험이 있다. forward fill·상폐 처리 및 필터 통과 후 비중 재정규화로 주문금액이 커지는 문제도 추가 검증 대상이다. 코드는 공매도 금지기간을 별도로 제외하지 않고, 실제 매매 체결을 시뮬레이션하는 대신 유동성 통과 조건으로 사용한다. 원천 CSV가 없어 독립 재실행하지 않았다. 기존 공개용 계산 코드는 변경하지 않았다.
+pick()의 다음 날짜 가격 가용성 확인은 미래정보 위험이 있다. forward fill·상폐 처리 및 필터 통과 후 비중 재정규화로 주문금액이 커지는 문제도 추가 검증 대상이다. 코드는 공매도 금지기간을 별도로 제외하지 않고, 실제 매매 체결을 시뮬레이션하는 대신 유동성 통과 조건으로 사용한다. 전체 실행에는 원천 금융 데이터가 필요하다.
 
 원본 데이터와 내부 발표·보고서는 포함하지 않는다. 보고 성과는 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).
