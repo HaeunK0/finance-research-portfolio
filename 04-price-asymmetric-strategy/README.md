@@ -4,7 +4,7 @@
 
 > **연구 질문:** 하나의 가격 시계열에서 네 가지 통계적 특성을 추출하고 목적에 맞는 판단 규칙으로 결합할 수 있는가?
 
-[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [그림 교체 안내](assets/README.md)
+[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [대표 차트](assets/)
 
 ## 연구 질문
 
@@ -12,11 +12,24 @@
 2. 네 통계량을 비교 가능한 순위로 변환하고 롱·숏 규칙에 어떻게 결합할 것인가?
 3. 점수의 예측력과 유지 기간, 거래 가능성을 어떤 실험으로 검증할 것인가?
 
-## 대표 차트
+## 대표 차트 | 2026.10.02 최종 발표본
 
-![Final PAS cumulative return and drawdown — 실제 그래프 교체 예정](assets/hero-placeholder.svg)
+![Horizon IC — 예측 기간별 순위 상관계수](assets/horizon-ic.svg)
 
-*실제 연구 그래프가 확보되면 교체할 자리입니다. 현재 그림은 성과 데이터가 아닙니다.*
+*투자제안서 11쪽 Horizon IC 그래프에 표시된 값을 재구성. 보유기간 누적수익률 기준 IC이며, 12쪽의 각 월 단독수익률 IC와 다른 분석이다.*
+
+![리밸런싱 주기별 성과](assets/rebalance-cagr.svg)
+
+*투자제안서 11쪽 표의 월간·분기·반기 리밸런싱 성과를 시각화. 왕복 거래비용 50bp, 대차비용 연 3% 가정.*
+
+| 2016.09–2026.08 | 최종 발표본 | KOSPI200 |
+| --- | ---: | ---: |
+| CAGR | 23.55% | 15.36% |
+| Sharpe | 1.24 | 0.57 |
+| MDD | -13.5% | -35.8% |
+| 연변동성 | 16.7% | 28.3% |
+
+출처: 투자제안서 13쪽. 기존 5일 체결 설명서 수치(21.6%, 1.14, -13.6%)와 구분한다. 위 그림은 발표자료에 명시된 수치를 바탕으로 재작성한 그림이며, 독립적으로 백테스트를 재실행하지 않았다.
 
 ## English summary
 
@@ -143,7 +156,7 @@ N=120, R²=0.106. 시장·규모·가치·모멘텀 통제 후 양의 절편이 
 | --- | --- |
 | [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
 | [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
-| [assets/](assets/) | 대표 그림 배치 및 교체 안내 |
+| [assets/](assets/) | 발표자료 수치 기반 검증 차트 및 출처 안내 |
 
 Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
 

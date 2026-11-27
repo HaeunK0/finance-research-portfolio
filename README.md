@@ -23,9 +23,11 @@ $$N_{i,t}=\frac{MarketCap_{i,t}\times 10^6}{AdjustedPrice_{i,t}}$$
 
 $$NSI_{i,t}=\ln\left(\frac{N_{i,t-1}}{N_{i,t-13}}\right),\qquad SY_{i,t}=DY_{i,t}-NSI_{i,t}$$
 
+**검증 사례.** 2018년 5월 삼성전자 50:1 액면분할을 대상으로 지표의 작동을 점검했습니다. 팀 발표자료에 따르면 수정주식수 대용치는 2017년 6월 65.33억주, 2018년 6월 64.19억주, 2018년 12월 59.70억주로 나타났습니다. 원 발행주식수의 분할에 따른 급증과 달리 대용치는 연속적인 수준을 유지했습니다. 실제 소각량과 직접 대조한 완전한 검증은 아닙니다.
+
 **검증 및 배운 점.** 회귀분석, 필터 제거 및 민감도 실험으로 지표의 유효성을 검토했습니다. 데이터에 원하는 변수가 직접 존재하지 않아도 변수의 정의와 관계를 이용하여 분석 목적에 맞는 정보를 도출할 수 있음을 배웠습니다. 수정주식수는 대용치이며 실제 발행주식수·자사주 소각액을 직접 측정한 값은 아닙니다.
 
-[상세 연구 및 수식](02-shareholder-yield/) · [Python Notebook](02-shareholder-yield/backtest.ipynb)
+[상세 연구 및 수식](02-shareholder-yield/) · [검증 차트](02-shareholder-yield/#대표-차트--20260918-팀-발표본) · [Python Notebook](02-shareholder-yield/backtest.ipynb)
 
 ---
 
@@ -145,7 +147,7 @@ finance-research-portfolio/
 └── 04-price-asymmetric-strategy/   # 통계 피처와 판단 규칙
 ```
 
-각 프로젝트에는 README, 기존 계산 로직을 보존한 backtest.ipynb, 대표 그림을 배치할 assets 폴더가 있습니다. 대표 성과 그림이 아직 확보되지 않은 경우에는 교체용 자리로 명시합니다.
+각 프로젝트에는 README와 기존 계산 로직을 보존한 backtest.ipynb가 있습니다. 02·04번에는 팀 발표자료의 확인 가능한 수치를 재구성한 검증 차트를 함께 게시합니다.
 
 ## Scope & transparency
 

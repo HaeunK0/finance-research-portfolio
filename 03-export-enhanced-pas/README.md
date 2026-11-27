@@ -4,19 +4,13 @@
 
 > **연구 질문:** 새로운 데이터를 추가하면 기존 의사결정 모델의 성능이 실제로 개선되는가?
 
-[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility) · [그림 교체 안내](assets/README.md)
+[Backtest Notebook](backtest.ipynb) · [데이터 및 방법론](#problem--data-workflow) · [연구 한계](#limitations--reproducibility)
 
 ## 연구 질문
 
 1. 기업별 수출액과 산업분류를 일관된 기준으로 연결할 수 있는가?
 2. 기업별 구축안의 적합성이 부족할 때 어떤 대체 데이터가 가능한가?
 3. 산업별 수출 신호의 추가가 가격 신호만 사용한 경우보다 유효한가?
-
-## 대표 차트
-
-![Price-only vs export overlay — cumulative return / drawdown — 실제 그래프 교체 예정](assets/hero-placeholder.svg)
-
-*실제 연구 그래프가 확보되면 교체할 자리입니다. 현재 그림은 성과 데이터가 아닙니다.*
 
 ## English summary
 
@@ -158,7 +152,6 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 | --- | --- |
 | [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
 | [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
-| [assets/](assets/) | 대표 그림 배치 및 교체 안내 |
 
 Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
 
