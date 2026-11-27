@@ -12,40 +12,36 @@
 2. 네 통계량을 비교 가능한 순위로 변환하고 롱·숏 규칙에 어떻게 결합할 것인가?
 3. 점수의 예측력과 유지 기간, 거래 가능성을 어떤 실험으로 검증할 것인가?
 
-## 대표 차트 | 2026.10.02 최종 발표본
+## 대표 차트 | 9월 30일 제출 Notebook
 
-![Horizon IC — 예측 기간별 순위 상관계수](assets/horizon-ic.svg)
+![Original notebook NAV: strategy versus KOSPI](assets/notebook-nav.webp)
 
-*투자제안서 11쪽 Horizon IC 그래프에 표시된 값을 재구성. 보유기간 누적수익률 기준 IC이며, 12쪽의 각 월 단독수익률 IC와 다른 분석이다.*
+*원본 `1팀코드제출_0930(2).ipynb` 첫 코드 셀의 저장 그래프를 축소한 이미지. 파란색은 롱숏 전략, 주황색은 KOSPI이다. 원본의 한글 글꼴 깨짐은 유지되며, 실제 가격 데이터를 다시 계산한 그림은 아니다.*
 
-![리밸런싱 주기별 성과](assets/rebalance-cagr.svg)
-
-*투자제안서 11쪽 표의 월간·분기·반기 리밸런싱 성과를 시각화. 왕복 거래비용 50bp, 대차비용 연 3% 가정.*
-
-| 2016.09–2026.08 | 최종 발표본 | KOSPI200 |
+| 2016.09–2026.08 · 120개월 | 5일 체결 가정 | KOSPI |
 | --- | ---: | ---: |
-| CAGR | 23.55% | 15.36% |
-| Sharpe | 1.24 | 0.57 |
-| MDD | -13.5% | -35.8% |
-| 연변동성 | 16.7% | 28.3% |
+| CAGR | 21.58% | 12.86% |
+| Sharpe (Rf 반영) | 1.1370 | 0.5103 |
+| MDD | -13.64% | -34.62% |
+| 연변동성 | 16.71% | 26.28% |
 
-출처: 투자제안서 13쪽. 기존 5일 체결 설명서 수치(21.6%, 1.14, -13.6%)와 구분한다. 위 그림은 발표자료에 명시된 수치를 바탕으로 재작성한 그림이며, 독립적으로 백테스트를 재실행하지 않았다.
+성과는 원본 두 번째 코드 셀의 저장 출력 `result_rf.round(4)` 기준이다. 저장소의 코드 셀 9개와 제공된 원본의 코드 셀 9개가 동일함을 확인했다. 원천 CSV는 이번 파일에 포함되지 않아 독립 재실행은 하지 않았다.
 
 ## English summary
 
-A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Rolling IC, signal decay and execution assumptions are examined. Reported results are distinguished by strategy version.
+A price-asymmetry strategy derives momentum, daily return volatility, skewness and a mean-to-standard-deviation Sharpe proxy from adjusted prices. Cross-sectional ranks are combined into distinct long and short scores. Rolling IC, signal decay and execution assumptions are examined. The primary results and charts are based on the saved outputs of the submitted September 30 notebook; the benchmark is KOSPI.
 
 ## 한눈에 보기
 
 | 항목 | 내용 |
 | --- | --- |
 | 신호 | MOM6 · VOL126 · SKEW126 · SHARPE126 |
-| 운용 | 분기 리밸런싱 · 롱110/숏90 · 5일 체결 조건 |
-| 설명서 성과 | CAGR 21.6% · Sharpe 1.14 · MDD -13.6% |
-| 최종 발표 별도 버전 | CAGR 23.55% · Sharpe 1.24 · MDD -13.5% |
-| 한계 | next_date 가격 존재 필터의 미래정보 위험 · 버전 구분 |
+| 운용 | 분기 리밸런싱 · 롱 후보 50 / 숏 후보 100 · 롱110%/숏90% · 5일 체결 가정 |
+| Notebook 저장 성과 | CAGR 21.58% · Sharpe 1.1370 · MDD -13.64% |
+| 비교 지수 | KOSPI (KOSPI200 아님) |
+| 한계 | next_date 가격 존재 필터의 미래정보 위험 · 실제 체결 및 공매도 금지 미반영 |
 
-성과는 기존 Notebook 저장 결과 또는 팀 보고값이며 독립적으로 재실행하지 않았습니다.
+대표 성과는 원본 Notebook에 저장된 실행 결과이며 독립적으로 재실행하지 않았습니다.
 
 ## Project overview
 
@@ -79,7 +75,7 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 - **예측력 분석 (Rolling IC):** 점수와 이후 수익률의 순위 상관관계를 시간에 따라 확인했다.
 - **예측 기간별 분석 (Signal Decay):** 예측 기간을 바꾸며 점수와 이후 수익률의 관계를 검토했다.
 - **민감도 분석:** 예상 체결기간을 달리한 성과 비교와 스코어 분포 분석을 수행했다.
-- **성과 평가:** 거래비용과 유동성 조건을 고려한 백테스트 및 팀 보고서의 요인 회귀 결과를 검토했다.
+- **성과 평가:** 거래비용과 유동성 조건을 고려한 백테스트를 실행하고 KOSPI와 비교했다.
 
 핵심 투자신호 네 가지는 수정주가에서 도출했지만, 거래 가능성 검토와 성과 측정에는 시가총액, 거래대금, 배당반영 수정주가 및 시장·요인 데이터도 사용했다. 하나의 원천 데이터에서 여러 의미 있는 특성을 도출하고 이를 실제 의사결정에 사용할 규칙으로 구조화한 경험이다.
 
@@ -93,9 +89,9 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 | 배당반영 수정주가 | 시장·총수익 | DataGuide / adj_close_dividend_0906.csv | 월별 총수익률 |
 | 월말 시가총액 | 시장 | DataGuide / mkt_cap_0906.csv | 시점별 상위 30% |
 | 일별 ADV20 | 시장·유동성 | DataGuide / 20일평균거래대금.csv | 예상 체결 가능성 |
-| KOSPI, Rf, SMB, HML, Mom | 시장·요인 | Factor_0917.csv | 벤치마크, Rf 조정, 보고서의 Carhart 회귀 |
+| KOSPI, Rf | 시장·요인 | Factor_0917.csv | KOSPI 벤치마크 및 무위험수익률 환산 |
 
-주요 데이터는 팀 DataGuide 추출 자료. 요인 데이터(KOSPI, SMB, HML, MOM, Rf)도 FnGuide DataGuide에서 추출했다. 지수 산출 정의는 별도 확인 대상이다.
+주요 데이터는 팀 DataGuide 추출 자료. 원본 Notebook은 요인 파일 중 KOSPI와 Rf를 실제로 사용한다. 지수 산출 정의는 별도 확인 대상이다.
 
 ## Data engineering & bias control
 
@@ -112,31 +108,58 @@ A price-asymmetry strategy derives momentum, daily return volatility, skewness a
 $$L=R(MOM6)R(SHARPE126)(1-R(SKEW126))$$
 $$S=R(MOM6)(1-R(VOL126))(1-R(SKEW126))$$
 
-숏 하위 100개 우선, 롱 상위 50개 후보 및 하락일 60일 이상 조건. ADV20 10%, 5일간 목표수량의 80% 체결 조건. 롱110/숏90, 분기 리밸런싱, 왕복 50bp 및 연 3% 대차.
+### 종목 선정 및 운용 조건
 
-제출 Notebook에는 체결기간별 성과 비교, Rolling IC 및 Signal Decay, 스코어 분포 분석이 있다. 단기 수익률과 점수의 Spearman 상관 및 예측 기간별 관계를 확인하는 실험이다.
+- 형성일 시가총액 상위 30%와 MOM12·MOM6·VOL·SKEW·평균수익률 유효 조건을 적용한다. MOM12는 점수에 직접 사용하지 않는 가격 이력 조건이다.
+- 숏 점수 하위 100개를 우선 선정하고, 이를 제외한 롱 적격 종목(Sharpe 대용치 유효, 최근 126거래일 중 하락 수익률 관측 60일 이상)에서 롱 점수 상위 50개를 선정한다.
+- 레그별 가정 운용금액 1,000억원을 목표 종목 수로 나눈 주문금액은 롱 20억원, 숏 10억원이다. 하루 ADV20의 10%까지 체결 가능하다고 가정하고, 5일 기준 예상 체결률 80% 이상인 후보만 편입한다(ADV20 하한 롱 32억원, 숏 16억원). 탈락한 자리는 보충하지 않는다.
+- 편입 후 레그별 동일가중, 명목 롱 110%·숏 90%(Gross 200%, Net +20%). 110과 90은 종목 수가 아니라 노출 비중이다. 2016년 8월 말부터 3개월마다 종목을 재선정하며, 분기 내에는 편입 종목의 월별 단순평균 수익률을 사용한다.
+- 매매비용은 편도 25bp × 노출 가중 회전율(왕복 50bp 상당), 대차비용은 숏 노출 90%에 연 3%를 월할해 차감한다(월 0.225%).
 
-### Factor regression (팀 전략설명서)
+### 1. 체결 기간 민감도
 
-보고서의 Carhart 4요인 모델은 KOSPI 월수익률−Rf, SMB·HML·MOM 지수의 월 변화율과 전략 월 초과수익률을 정렬하고 HAC(12)로 표준오차를 보정했다.
+![Execution horizon robustness](assets/execution-robustness.svg)
 
-| Variable | Coefficient | t-stat | p-value |
-|---|---:|---:|---:|
-| Alpha (월) | 0.0127 | 3.30 | <0.001 |
-| MKT−RF | 0.0324 | 0.43 | 0.664 |
-| SMB | -0.2148 | -1.39 | 0.165 |
-| HML | 0.1413 | 0.96 | 0.338 |
-| MOM | 0.0818 | 0.72 | 0.473 |
+| 지표 | 3일 | 5일 (기준) | 10일 | KOSPI |
+| --- | ---: | ---: | ---: | ---: |
+| CAGR | 24.13% | 21.58% | 20.72% | 12.86% |
+| 연변동성 | 18.39% | 16.71% | 15.93% | 26.28% |
+| Sharpe (Rf 반영) | 1.1643 | 1.1370 | 1.1402 | 0.5103 |
+| MDD | -20.46% | -13.64% | -14.12% | -34.62% |
 
-N=120, R²=0.106. 시장·규모·가치·모멘텀 통제 후 양의 절편이 보고되었고 시장 베타는 통계적으로 유의하지 않았다. 낮은 R²는 설명되지 않는 변동 비율이 크다는 뜻이지 그 전체가 알파라는 뜻이 아니다. 회귀 구현 셀은 현재 제출 Notebook에 포함되지 않아 보고서 수치로 구분한다.
+3일 가정은 수익률이 높지만 최대낙폭도 크고, 5일 가정은 세 전략 중 최대낙폭이 가장 작다. 위 결과는 체결기간 가정에 대한 민감도이지 실제 체결 기록이 아니다. Rf는 연율(%)을 252거래일 기준 일수익률로 환산하고 월별 복리 누적한다. Sharpe 분자는 월 초과수익률 평균, 분모는 전략 월수익률의 표준편차이다.
 
-| 5-day execution (report) | Strategy | KOSPI200 |
-|---|---:|---:|
-| CAGR | 21.6% | 15.4% |
-| Sharpe (Rf adjusted) | 1.14 | 0.57 |
-| MDD | -13.6% | -35.9% |
+### 2. Horizon IC / Signal Decay
 
-2016.09–2026.08 제출 코드와 연결된 설명서 기준. 최종 발표의 별도 버전은 CAGR 23.55%, Sharpe 1.24, MDD -13.5%를 보고한다. 두 버전을 혼합하지 않는다. 공매도 금지기간의 실행 가능성 및 비용 정합성은 한계다. 독립 재실행 결과가 아니다.
+![Mean forward IC from submitted notebook](assets/horizon-ic.svg)
+
+| 예측 기간 (누적수익률) | Long IC | Short IC | Long 양수 비율 | Short 양수 비율 | 관측 월 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 1개월 | 0.0080 | 0.0945 | 55.00% | 76.67% | 120 |
+| 2개월 | 0.0149 | 0.1226 | 57.98% | 81.51% | 119 |
+| 3개월 | 0.0189 | 0.1334 | 62.71% | 84.75% | 118 |
+
+각 월 형성 시점의 원점수와 이후 1~3개월 **누적** 수익률의 횡단면 Spearman 상관계수를 계산한다. IC용 get_scores()는 미래 가격 존재 여부, 유동성 필터, 상·하위 후보 선정을 사용하지 않는다. 롱 IC에는 하락일 조건을 적용한다. 숏 점수는 낮은 종목을 공매도하므로 **원점수와 기초자산 수익률의 양의 상관**이 전략 방향과 일치한다. 원본에는 12개월 Rolling IC(최소 6개월) 그래프와 3M/1M IC 비율도 저장되어 있다(롱 235.38%, 숏 141.17%). 롱의 절대 IC는 작으며 작은 분모에 따른 비율 확대 및 누적수익률 구간 중첩을 고려해야 한다. 별도의 유의성 검정이나 최적 리밸런싱 주기의 입증은 아니다.
+
+### 3. 점수 분포 및 선정 단계 점검
+
+마지막 리밸런싱 형성일 2026.05.29의 원본 저장 출력:
+
+| 구분 | 유효 점수 수 | 점수 후보 | 유동성 통과 후 편입 | 점수 중앙값 |
+| --- | ---: | ---: | ---: | ---: |
+| Long | 960 | 50 | 47 | 0.0826 |
+| Short | 964 | 100 | 88 | 0.0699 |
+
+점수의 원값·백분위 순위 및 필터 전후 후보를 시각화하는 셀이 포함되어 있다. 이는 마지막 형성일 사례이며 전체 기간 평균 체결률이 아니다. 해당 셀의 실행 번호는 비어 있으나 저장된 그림과 표는 존재한다.
+
+### 검증 기록 — 발표자료와 Notebook의 차이
+
+| 출처 | CAGR | Sharpe | MDD | 벤치마크 |
+| --- | ---: | ---: | ---: | --- |
+| 9월 30일 제출 Notebook (대표) | 21.58% | 1.1370 | -13.64% | KOSPI |
+| 10월 2일 팀 발표자료 | 23.55% | 1.24 | -13.5% | KOSPI200 (발표자료 표기) |
+
+이 페이지의 대표 수치와 차트는 첫 행으로 통일했다. 발표자료의 1~6개월 IC, 리밸런싱 주기 비교, Carhart 회귀 등은 현재 원본 Notebook의 실행 출력으로 확인할 수 없으므로 대표 검증에서 제외한다. 서로 다른 성과의 정확한 원인은 해당 발표용 코드와 입력 이력 없이는 확정할 수 없다.
 
 ## Contribution & tools
 
@@ -148,7 +171,7 @@ N=120, R²=0.106. 시장·규모·가치·모멘텀 통제 후 양의 절편이 
 
 ## What we learned | 시행착오와 해석
 
-평가에는 Rolling IC, Signal Decay, 체결기간 비교 및 스코어 분포가 포함된다. 보고서의 Carhart 회귀는 제출 Notebook에서 재현된 결과와 구분한다.
+평가에는 Rolling IC, Signal Decay, 3·5·10일 체결기간 비교 및 스코어 분포가 포함된다. 수익률만 비교하지 않고 낙폭·예측력·유동성 제약도 함께 점검했다.
 
 ## Repository structure & execution
 
@@ -156,12 +179,12 @@ N=120, R²=0.106. 시장·규모·가치·모멘텀 통제 후 양의 절편이 
 | --- | --- |
 | [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
 | [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
-| [assets/](assets/) | 발표자료 수치 기반 검증 차트 및 출처 안내 |
+| [assets/](assets/) | 원본 저장 NAV 그래프, IC 및 체결기간 비교 차트 |
 
 Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
 
 ## Limitations & reproducibility
 
-pick()의 다음 날짜 가격 가용성 확인, forward fill·상폐 처리 및 비중 재정규화 후 체결률은 추가 검증 대상이다. 두 보고 성과 버전을 혼합하지 않는다.
+pick()의 다음 날짜 가격 가용성 확인은 미래정보 위험이 있다. forward fill·상폐 처리 및 필터 통과 후 비중 재정규화로 주문금액이 커지는 문제도 추가 검증 대상이다. 코드는 공매도 금지기간을 별도로 제외하지 않고, 실제 매매 체결을 시뮬레이션하는 대신 유동성 통과 조건으로 사용한다. 원천 CSV가 없어 독립 재실행하지 않았다. 기존 공개용 계산 코드는 변경하지 않았다.
 
 원본 데이터와 내부 발표·보고서는 포함하지 않는다. 보고 성과는 역사적 백테스트이며 실제 운용 결과가 아니다. [전체 포트폴리오로 돌아가기](../).

@@ -1,6 +1,7 @@
 # Figure sources
 
-- `horizon-ic.svg`: 2026.10.02 PAS 최종 팀 투자제안서 11쪽 Horizon IC 표시값 재시각화.
-- `rebalance-cagr.svg`: 같은 자료 11쪽 리밸런싱 주기별 성과표 수치 재시각화.
+- `notebook-nav.webp`: resized saved original NAV image from cell 0 of the submitted September 30 Notebook; blue = strategy, orange = KOSPI. Korean glyphs are missing in the original.
+- `horizon-ic.svg`: redrawn from the stored mean IC table in cell 3, horizons 1–3 months, raw short-score correlation.
+- `execution-robustness.svg`: redrawn from the saved 3/5/10-day execution scenario table in cell 1.
 
-최종 발표본 수치(23.55% / 1.24 / -13.5%)와 기존 설명서 수치(21.6% / 1.14 / -13.6%)를 구분한다. 원천 데이터 및 발표자료 전체는 공개하지 않는다.
+All cell indices are zero-based. Main 5-day performance: CAGR 21.58%, Rf-adjusted Sharpe 1.1370, MDD -13.64%. These are saved outputs, not a new rerun. No raw market data is included. The previous presentation-based figures have been replaced.
