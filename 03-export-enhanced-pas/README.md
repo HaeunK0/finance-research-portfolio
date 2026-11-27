@@ -12,6 +12,21 @@
 2. 기업별 구축안의 적합성이 부족할 때 어떤 대체 데이터가 가능한가?
 3. 산업별 수출 신호의 추가가 가격 신호만 사용한 경우보다 유효한가?
 
+## 대표 차트
+
+![Fixed30 PAS vs PAS + Export 50:50 — net NAV](assets/notebook-nav.webp)
+
+*원본 `main.ipynb`의 Fixed30 백테스트 셀에 저장된 누적수익률 그림을 축소한 이미지입니다. 동일한 Notebook 저장 출력의 성과표를 아래와 같이 정리했습니다.*
+
+| 140개 보유월 | PAS Only | PAS + Export 50:50 |
+| --- | ---: | ---: |
+| Net CAGR | 34.13% | 33.76% |
+| Sharpe (Rf 차감 전) | 1.3113 | 1.3504 |
+| MDD | -43.63% | -31.60% |
+| 연변동성 | 25.04% | 23.88% |
+
+원본 코드 셀 15개가 저장소 Notebook과 일치한다. 원본 ZIP의 별도 실험 CSV에는 다른 결과도 존재해, 여기서는 `main.ipynb`에 저장된 Fixed30 50:50 본 실험의 출력을 기준으로 한다. 원천 데이터를 읽어 새로 실행하는 작업은 시간 제한으로 완료하지 못했다.
+
 ## English summary
 
 An exploratory Korean equity long/short study compares price-asymmetry signals with a combination of price signals and industry export-growth acceleration. The team explored firm-level export collection before adopting industry-level K-stat data. In the main 50:50 experiment, drawdown and Sharpe improved, but CAGR fell slightly and drawdown remained high. The strategy was not adopted as the final approach.
@@ -26,7 +41,7 @@ An exploratory Korean equity long/short study compares price-asymmetry signals w
 | 보고 성과 | CAGR 33.76% · Sharpe 1.35 · MDD -31.60% |
 | 한계 | 최종 미채택 · 추가 정보의 증분 유의성 미검증 |
 
-성과는 기존 Notebook 저장 결과 또는 팀 보고값이며 독립적으로 재실행하지 않았습니다.
+대표 성과 및 아래 통계 검정은 원본 main.ipynb 저장 출력 기준입니다. 초기 데이터 구축 일화와 적용 범위의 발표자료 수치는 별도로 구분합니다.
 
 ## Project overview
 
@@ -87,7 +102,7 @@ K-stat은 산업·품목별 수출 통계 출처로 발표 초안에 명시된�
 
 월평균 거래 가능 종목 302개 중 53.7개(제안서 보고 기준 17.5%)에 수출 신호를 반영했다. 이는 초기 기업별 매핑 성공률과 다른 지표이며, 나머지 82.5%는 매핑 실패율이 아니라 미적용 비율이다.
 
-현재 Notebook은 분석용 CSV 입력 이후 단계부터 시작하며 원본 수집 코드와 초기 구축안은 게시하지 않는다.
+현재 Notebook은 분석용 CSV 입력 이후 단계부터 시작하며 원본 수집 코드와 초기 구축안은 게시하지 않는다. 17.5%는 팀 발표자료에서 제시한 적용 범위로, 이번에 재실행해 산출한 수치가 아니다.
 
 ## Data engineering & bias control
 
@@ -99,7 +114,16 @@ K-stat은 산업·품목별 수출 통계 출처로 발표 초안에 명시된�
 
 $$ExportShock_{j,t}=YoY_{j,t}-YoY_{j,t-1}$$
 
-12–1개월 MOM, 126거래일 VOL/SKEW(최소 100개 관측)를 횡단면 순위화. 가격 신호를 재순위화한 후 수출 신호와 50:50 결합한다. 롱30/숏30, 월별 동일가중, Gross 200%, Net 0%. ADV20, 하루 참여율 10%, 5일 예상 체결률 80% 기준을 검토했다.
+12–1개월 MOM, 126거래일 VOL/SKEW(최소 100개 관측)를 횡단면 순위화한다. 원본의 비대칭 가격 신호는 다음과 같다.
+
+$LONG=R(MOM)(1-R(SKEW)),\qquad PAS=R(MOM)(1-R(VOL))(1-R(SKEW))$
+
+두 가격 점수를 다시 순위화한 후 수출 shock의 횡단면 순위와 각각 50:50 결합한다. 미매핑 종목은 가격 점수 그대로 유지. Fixed30 본 실험은 숏 점수 하위 30종목을 먼저 선정하고 이를 제외한 롱 점수 상위 30종목을 선정한다. 월별 동일가중, Gross 200%, Net 0%.
+
+- 거래비용: 회전율에 0.002를 곱하는 방식(편도 20bp, 왕복 40bp에 해당), 대차 연 3%/12.
+- 각 레그 AUM 1,000억원, 하루 ADV20의 10%, 5일간 목표 주문액의 80% 기준으로 사전 유동성 필터 적용(ADV20 약 53.33억원/일 이상).
+- 원본 실행 출력에서 수출 결합안의 평균 5일 리밸런싱 체결률은 89.67%, 양 레그 모두 80%를 만족한 월의 비율은 87.86%. 모든 달이 제약을 만족하는 것은 아니다. 모델상 예상 체결률이며 실제 체결 기록이 아니다.
+- 본 실험에는 공매도 전면 금지 기간을 별도로 제외하는 조건이 없어 실제 운용 가능성과 구분한다.
 
 ## Statistical validation & experiment design
 
@@ -115,24 +139,29 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 
 시장 통제 회귀와 Rf 조정 초과수익 검증도 수행했다. Factor_0917.csv의 KOSPI를 이용했으며 KOSPI200 파일이 없는 저장 결과에서는 KOSPI proxy로 표시한다. 50:50의 Rf 조정 평균수익 HAC p-value 0.00029는 FF3 알파 p-value가 아니다.
 
-별도의 수출 25% 실험에서는 요인 파일의 월별 MKT−RF, SMB, HML, Mom을 정렬하여 HAC(3) 회귀를 비교했다. 저장 CSV의 FF3-style 결과:
+### 수출 신호 비중 비교 (동일한 순성과 백테스트)
 
-| 25% 실험 | 월 알파 | HAC t | p-value |
+| 수출 비중 | Net CAGR | Sharpe (Rf 차감 전) | MDD |
 |---|---:|---:|---:|
-| PAS only | 2.0873% | 3.1234 | 0.001788 |
-| PAS + Export 25% | 2.1941% | 3.6885 | 0.000226 |
+| 0% | 34.128% | 1.31135 | -43.626% |
+| 25% | 31.232% | 1.25679 | -33.063% |
+| 50% | 33.760% | 1.35042 | -31.599% |
+| 75% | 33.802% | 1.34918 | -33.302% |
+| 100% | 26.380% | 1.12028 | -37.377% |
 
-두 전략의 양의 알파는 유의하지만, 별도 증분 검정 없이 수출 추가 효과가 유의하다고 주장할 수 없다. 이 수치는 50:50 주 실험과 다른 버전이다.
+![Export signal weight sensitivity](assets/export-weight-sensitivity.svg)
+
+원본 main.ipynb의 SAME NET BACKTEST(셀 10, 0부터 시작)의 저장값. 다른 25% 실험의 요인회귀나 Fixed50/유동성 제약 제거 실험의 출력은 이 표와 결합하지 않는다. 별도의 증분 효과 검정 없이 수출 데이터 추가 효과가 통계적으로 유의하다고 주장하지 않는다.
 
 ## Reported results
 
 | Main 50:50 experiment | PAS Only | PAS + Export |
 |---|---:|---:|
 | Net CAGR | 34.13% | 33.76% |
-| Sharpe (원 보고 기준) | 1.31 | 1.35 |
+| Sharpe (Rf 차감 전) | 1.3113 | 1.3504 |
 | MDD | -43.63% | -31.60% |
 
-수출 데이터 결합 시 낙폭이 줄었으나 절대 수준은 여전히 높았다. 가중치 민감도, 5×5 이중정렬, 기간별 및 체결 가능성 검증을 수행했다. 최종 전략으로 채택되지 않은 연구도 비교 실험의 결과로 보존한다. 수치는 기존 출력/보고값이며 독립 재실행하지 않았다.
+수출 데이터 결합 시 낙폭이 줄었으나 절대 수준은 여전히 높았다. 가중치 민감도, 5×5 이중정렬, 기간별 및 체결 가능성 검증을 수행했다. 최종 전략으로 채택되지 않은 연구도 비교 실험의 결과로 보존한다. 수치는 원본 main.ipynb 저장 출력이며 독립 재실행하지 않았다. 저장 출력의 Rf 차감 Sharpe는 PAS Only 1.23041, PAS + Export 1.26528로 별도로 보고된다.
 
 ## Contribution
 
@@ -140,11 +169,11 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 
 ## Reproducibility
 
-[backtest.ipynb](backtest.ipynb)는 대표 Notebook main.ipynb에 설명 셀을 추가한 버전이다. 호출 보조 모듈은 아직 이 저장소에 게시되지 않았다. 추가 실험은 별도 버전이며 원천 금융 데이터는 게시하지 않는다.
+[backtest.ipynb](backtest.ipynb)는 대표 Notebook main.ipynb와 코드 셀 15개가 일치하는 설명 추가 버전이다. ZIP에는 호출 보조 모듈 fixed30_execution_regression.py와 export_month_selection_audit.py가 포함되어 있지만 저장소에는 게시되지 않았다. 원천 금융 데이터는 공개하지 않는다. 제공된 fixed30_pas_export_summary.csv의 CAGR 29.7134%/28.9658%는 main.ipynb 저장 출력 34.128%/33.760%와 일치하지 않아 별도 결과로 취급한다. 이번 실행은 원천 데이터 로딩까지 완료했으나 시간 제한으로 핵심 백테스트를 완료하지 못했다.
 
 ## What we learned | 시행착오와 해석
 
-초기 기업별 구축안 폐기와 산업별 대체안의 최종 미채택은 서로 다른 판단이다. 50:50 본 실험과 별도 25% 회귀 실험의 결과는 구분한다.
+초기 기업별 구축안 폐기와 산업별 대체안의 최종 미채택은 서로 다른 판단이다. 대표 결과는 main.ipynb의 Fixed30 본 실험과 동일 조건에서 계산된 수출 비중 민감도로 한정한다.
 
 ## Repository structure & execution
 
@@ -152,6 +181,7 @@ main.ipynb의 분위 수익률 차이에 상수항 OLS + HAC(6)를 적용하여 
 | --- | --- |
 | [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
 | [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
+| [assets/](assets/) | 원본 저장 그래프, 민감도 차트 및 출처 안내 |
 
 Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
 

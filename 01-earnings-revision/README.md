@@ -12,6 +12,21 @@
 2. 두 신호의 스케일과 정보 이용 시점 차이를 어떻게 처리할 것인가?
 3. 결합 점수에 따른 성과가 시장·규모·가치 요인을 통제한 뒤에도 유의한가?
 
+## 대표 차트
+
+![EPS Revision and Earnings Surprise: Long-Short NAV vs KOSPI200](assets/notebook-nav.webp)
+
+*원본 `eps+earningsurprise.ipynb` 마지막 성과 시각화 셀에 저장된 실행 그래프를 축소한 이미지입니다. 새로 추정한 수익률 곡선이 아닙니다.*
+
+| 원본 Notebook 저장 결과 | 롱숏 전략 | KOSPI200 |
+| --- | ---: | ---: |
+| CAGR | 17.78% | 14.77% |
+| Sharpe (Rf 차감 전) | 1.154 | 0.632 |
+| MDD | -17.06% | -35.64% |
+| 연변동성 | 15.27% | 28.02% |
+
+성과 기간은 2015.10–2026.08 (131개월 중 전략 활성 99개월, 전면 공매도 금지와 겹친 32개월 미운용). 원본 코드 셀 16개가 현재 공개용 Notebook의 코드 셀과 일치함을 확인했습니다. 이번에는 시가총액 입력 파일 누락으로 독립 재실행을 하지 않았으며, 원본 저장 결과를 사용했습니다.
+
 ## English summary
 
 A monthly-rebalanced Korean equity long/short strategy combining earnings surprise and FY2 EPS revisions using cross-sectional percentile ranks. The two signals are aligned at month-end and lagged by three months as a conservative timing assumption. Historical results are evaluated with CAPM and Fama–French three-factor regressions using HAC standard errors.
@@ -26,7 +41,7 @@ A monthly-rebalanced Korean equity long/short strategy combining earnings surpri
 | 통계 검증 | CAPM / FF3 연환산 알파 14.00% / 13.88% |
 | 한계 | 3개월 시차는 보수적 가정, 공시일·상폐 수익률 검증 필요 |
 
-성과는 기존 Notebook 저장 결과 또는 팀 보고값이며 독립적으로 재실행하지 않았습니다.
+성과와 회귀 수치는 원본 Notebook의 저장된 실행 결과입니다. 독립적으로 재실행하지 않았습니다.
 
 ## Project overview
 
@@ -52,7 +67,7 @@ A monthly-rebalanced Korean equity long/short strategy combining earnings surpri
 | FY2 EPS Revision | 재무·애널리스트 전망 | FnGuide DataGuide / kospi_EPS_FY2.csv | 월말 정렬, %→소수, 3개월 lag |
 | Earnings Surprise | 실적·컨센서스 기반 | FnGuide DataGuide / surprise.csv | 일별 마지막 월 관측값, %→소수, 3개월 lag |
 | 주가 | 비재무 시장 데이터 | FnGuide DataGuide / kospi.csv | 월말 가격과 다음 달 수익률 |
-| 시가총액·60일 평균 거래대금 | 시장·유동성 | FnGuide DataGuide / 시총 CSV, trading_value_60_0906.csv | 월말 정렬, 시총 및 유동성 필터 |
+| 시가총액·60일 평균 거래대금 | 시장·유동성 | FnGuide DataGuide / kospi_stock.csv 또는 kospi_mcap.csv, trading_value_60_0906.csv | 월말 정렬, 시총 및 유동성 필터 |
 | KOSPI200 | 벤치마크 | kospi_200.csv | 월별 수익률 |
 | KOSPI, SMB, HML, Rf | 시장 및 요인 데이터 | factor_model_index.csv | 지수 월 변화율, 무위험수익률 월환산 |
 
@@ -72,7 +87,7 @@ A monthly-rebalanced Korean equity long/short strategy combining earnings surpri
 
 $$Score=0.5R_{Revision}+0.5R_{Surprise}$$
 
-상위 20개와 하위 20개, 월별 리밸런싱, Gross 200%, Net 0%. 왕복 거래비용 30bp, 대차비용 연 3%, 공매도 전면 금지 월 미운용.
+상위 20개와 하위 20개, 월별 동일가중 리밸런싱, 활성 월 Gross 200%, Net 0%. 왕복 거래비용 30bp, 대차비용 연 3%의 월 복리 환산, 공매도 전면 금지 기간과 하루라도 겹치는 보유월 미운용.
 
 ## Statistical validation
 
@@ -89,7 +104,7 @@ statsmodels OLS, Newey–West HAC(12개월). 이분산성과 시계열 자기상
 
 FF3에서 SMB 0.0725, HML 0.0441, R² 0.00584. 표본 내에서 시장·규모·가치 노출을 통제한 절편이 유의하게 양수였으며 시장 베타는 작았다. 미래 성과 보장이나 인과적 효과를 의미하지 않는다.
 
-Notebook 저장 결과: CAGR 17.78%, Sharpe 1.154, MDD -17.06% (거래비용 차감). 독립 재실행 결과가 아니다.
+원본 Notebook 저장 결과: CAGR 17.78%, Sharpe 1.154, MDD -17.06% (거래비용 및 대차비용 차감). 성과표 Sharpe는 월수익률 평균을 월변동성으로 나누어 연환산하며 Rf를 차감하지 않는다. 요인 회귀에서는 별도로 Rf를 차감한다.
 
 ## Contribution & tools
 
@@ -97,7 +112,7 @@ Notebook 저장 결과: CAGR 17.78%, Sharpe 1.154, MDD -17.06% (거래비용 차
 
 ## Reproducibility
 
-[backtest.ipynb](backtest.ipynb)는 원본 계산 로직을 보존하고 설명 셀을 추가한 검토용 Notebook이다. ZIP 내 Date/ 폴더와 코드의 Data/ 경로 및 시총 파일명 차이는 실행 전 확인해야 한다.
+[backtest.ipynb](backtest.ipynb)는 원본 계산 로직을 보존하고 설명 셀을 추가한 검토용 Notebook이다. 원본 ZIP의 Date/ 폴더는 코드의 Data/ 경로와 다르며, 코드가 요구하는 시가총액 파일 kospi_stock.csv 또는 kospi_mcap.csv는 이번 ZIP에 포함되어 있지 않았다. 따라서 저장된 원본 결과 및 그래프를 인용하고 독립 재실행은 보류했다.
 
 ## What we learned | 시행착오와 해석
 
@@ -109,6 +124,7 @@ Notebook 저장 결과: CAGR 17.78%, Sharpe 1.154, MDD -17.06% (거래비용 차
 | --- | --- |
 | [README.md](README.md) | 연구 질문, 방법론, 검증 결과와 한계 |
 | [backtest.ipynb](backtest.ipynb) | 기존 계산 로직과 설명 셀을 포함한 Notebook |
+| [assets/](assets/) | 원본 Notebook 저장 그래프 및 출처 안내 |
 
 Jupyter Notebook/VS Code에서 Notebook을 열고 상단의 import 및 입력 경로를 확인한다. 위 데이터 출처 표에 명시된 원천 파일을 이용 권한에 맞게 로컬에 준비해야 한다. 저장소만으로는 완전한 실행을 보장하지 않으며 라이브러리 버전 및 실제 실행 환경은 추가 확인이 필요하다.
 

@@ -1,6 +1,7 @@
 # Figure sources
 
-- `subperiod-cagr.svg`: 2026.09.18 주주환원 전략 팀 발표자료 8번째 슬라이드(표기 12), 국면별 성과표의 수치 재시각화.
-- `dy-nsi-heatmap.svg`: 같은 발표자료 9번째 슬라이드(표기 14), CAGR 히트맵의 표시 수치 재시각화.
+- `nav-drawdown.svg`: 130 months of NAV from the original Notebook rerun, rounded to four decimal places for drawing; drawdown computed from those values.
+- `dy-nsi-heatmap.svg`: 5×5 annualized return table from the original double-sort cell rerun.
+- `subperiod-cagr.svg`: original subperiod cell rerun.
 
-발표본 기준안 수치(16.89% / 1.078 / -18.20%)와 별도 보고서 수치는 구분한다. 그래프는 발표자료 수치를 재구성한 것이며 실제 가격 데이터를 재실행하거나 원본 파일을 공개한 것이 아니다.
+The main long 100/short 80 result (17.82% CAGR, 1.154 Sharpe, -18.20% MDD) is the result of the 2026-11-27 local rerun with line breaks and input-file aliases restored; calculation logic was preserved. No raw data is included. Historical presentation numbers are not the source of these figures.
